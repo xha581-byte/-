@@ -1,272 +1,730 @@
-<!doctype html>
-<html lang="zh">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TK 事件激活后台（Index 单文件）</title>
-  <style>
-    :root { --border:#e5e7eb; --muted:#6b7280; --bg:#fafafa; --text:#111827; --accent:#111; }
-    * { box-sizing: border-box; }
-    body { font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC", "Microsoft YaHei"; margin: 24px; color: var(--text); background: var(--bg); }
-    h1 { margin: 0 0 12px; font-size: 22px; }
-    h3 { margin: 0 0 8px; font-size: 16px; }
-    .toolbar { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom: 12px; }
-    .card { border: 1px solid var(--border); background:#fff; border-radius: 14px; padding: 16px; margin: 12px 0; box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
-    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-    .muted { color: var(--muted); font-size: 12px; }
-    select, input[type="number"], input[type="text"] {
-      padding: 10px 12px; border:1px solid var(--border); border-radius: 10px; background:#fff; min-width: 160px;
-    }
-    button { padding: 10px 14px; border:1px solid var(--accent); background: var(--accent); color:#fff; border-radius: 10px; cursor:pointer; font-weight: 600; }
-    button.secondary { background:#fff; color:var(--accent); }
-    button:disabled { opacity:.5; cursor:not-allowed; }
-    table { width:100%; border-collapse: collapse; margin-top: 8px; }
-    th, td { text-align:left; padding:10px 8px; border-bottom:1px solid #f0f0f0; }
-    thead th { font-size:12px; color:var(--muted); text-transform: uppercase; letter-spacing: .04em; }
-    .status-dot { display:inline-block; width:8px; height:8px; border-radius:999px; margin-right:6px; vertical-align:middle; }
-    .ok { background:#10b981; } .off { background:#ef4444; }
-    .pill { font-size:12px; padding:4px 8px; border-radius:999px; background:#f3f4f6; border:1px solid #e5e7eb; }
-    .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 960px){ .grid { grid-template-columns: 1fr; } }
-    .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
-    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; background:#f3f4f6; border:1px solid #e5e7eb; padding:2px 6px; border-radius:6px; font-size:12px; }
-    .badge { font-size:12px; padding:4px 8px; border-radius:8px; border:1px solid #e5e7eb; color:#374151; background:#fff; }
-    .danger { color:#b91c1c; }
-    .success { color:#065f46; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Multi-Pixel Activator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --tg-bg-main: #f4f6f9;
+            --tg-surface: #ffffff;
+            --tg-primary: #0f172a; /* 深邃邃蓝，更显专业 */
+            --tg-accent-cyan: #06b6d4;
+            --tg-accent-pink: #f43f5e;
+            --tg-text-main: #1e293b;
+            --tg-text-muted: #64748b;
+            --tg-border: #e2e8f0;
+            --tg-success: #10b981;
+            --tg-danger: #ef4444;
+        }
+
+        body {
+            background-color: var(--tg-bg-main);
+            color: var(--tg-text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 0.95rem;
+        }
+
+        /* 顶部导航与语言切换 */
+        .navbar-custom {
+            background-color: var(--tg-surface);
+            border-bottom: 1px solid var(--tg-border);
+            padding: 1rem 2rem;
+        }
+
+        .brand-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--tg-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 卡片重构：扁平化、高级阴影与微光流边 */
+        .premium-card {
+            background: var(--tg-surface);
+            border: 1px solid var(--tg-border);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.25s ease;
+            height: 100%;
+        }
+        
+        .premium-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header-custom {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--tg-border);
+            font-weight: 600;
+            color: var(--tg-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body-custom {
+            padding: 1.5rem;
+        }
+
+        /* 核心看板组件 */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card-mini {
+            background: var(--tg-surface);
+            border: 1px solid var(--tg-border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--tg-primary);
+            line-height: 1.2;
+            margin-top: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--tg-text-muted);
+            font-weight: 500;
+        }
+
+        /* 表单与输入精细化方案 */
+        .form-control-custom {
+            border: 1px solid var(--tg-border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            background-color: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .form-control-custom:focus {
+            background-color: var(--tg-surface);
+            border-color: var(--tg-accent-cyan);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+            outline: none;
+        }
+
+        /* 动态像素网格 */
+        .pixel-monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 0.25rem;
+        }
+
+        .pixel-status-node {
+            background: #f8fafc;
+            border: 1px solid var(--tg-border);
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* 各种按钮风格 */
+        .btn-premium-primary {
+            background: var(--tg-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-premium-primary:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .btn-premium-primary:disabled {
+            background: var(--tg-border);
+            color: var(--tg-text-muted);
+            transform: none;
+        }
+
+        /* 状态微章 */
+        .badge-dot {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-weight: 600;
+            padding: 0.25rem 0.625rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+        }
+
+        .bg-waiting { background: #f1f5f9; color: #475569; }
+        .bg-running { background: #e0f2fe; color: #0369a1; }
+        .bg-success-lite { background: #d1e7dd; color: #0f5132; }
+        .bg-danger-lite { background: #f8d7da; color: #842029; }
+
+        /* 历史表格设计 */
+        .table-premium {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .table-premium th {
+            background: #f8fafc;
+            color: var(--tg-text-muted);
+            padding: 0.85rem 1rem;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 1px solid var(--tg-border);
+        }
+
+        .table-premium td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--tg-border);
+            color: var(--tg-text-main);
+        }
+    </style>
 </head>
 <body>
-  <div class="topbar">
-    <h1>TK 事件激活后台</h1>
-    <div class="toolbar">
-      <label class="badge">
-        <input id="mockToggle" type="checkbox" />
-        使用假数据模式
-      </label>
-      <span class="muted">API 根地址：
-        <span class="kbd" id="apiBaseText"></span>
-      </span>
+
+    <nav class="navbar-custom d-flex justify-content-between align-items-center">
+        <div class="brand-title">
+            <i class="fab fa-tiktok text-dark"></i>
+            <span>TikTok Multi-Pixel Activator</span>
+        </div>
+        <div>
+            <select class="form-select form-select-sm" id="langSelector" style="width: 120px; border-radius: 6px;">
+                <option value="zh">简体中文</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4 py-4">
+        <div class="stat-grid">
+            <div class="stat-card-mini">
+                <span class="stat-label" data-i18n="stat_total">Total Pixels / 总像素数</span>
+                <span class="stat-value" id="totalPixels">0</span>
+            </div>
+            <div class="stat-card-mini">
+                <span class="stat-label" data-i18n="stat_active">Active Pixels / 已激活像素</span>
+                <span class="stat-value text-info" id="activePixels">0</span>
+            </div>
+            <div class="stat-card-mini">
+                <span class="stat-label" data-i18n="stat_events">Events Sent / 已发事件数</span>
+                <span class="stat-value text-purple" id="totalEvents">0</span>
+            </div>
+            <div class="stat-card-mini">
+                <span class="stat-label" data-i18n="stat_rate">Success Rate / 激活成功率</span>
+                <span class="stat-value text-success" id="successRate">100%</span>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-xl-6">
+                <div class="premium-card">
+                    <div class="card-header-custom">
+                        <i class="fas fa-sliders-h text-cyan"></i>
+                        <span data-i18n="card_config">Configuration / 配置中心</span>
+                    </div>
+                    <div class="card-body-custom">
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-medium" data-i18n="label_pixel_ids">Pixel IDs (Comma separated)</label>
+                            <textarea class="form-control form-control-custom" id="pixelIds" rows="3" placeholder="e.g. CM3C2F77SJN5G97J9UR0, A1B2C3D4E5F6G7H8I9J0"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-medium" data-i18n="label_links">Activation Links (One per line)</label>
+                            <textarea class="form-control form-control-custom" id="activationLinks" rows="3" placeholder="https://example.com/activate?id=CM3C2F77SJN5G97J9UR0"></textarea>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="autoDetect" checked>
+                                    <label class="form-check-label text-secondary small" for="autoDetect" data-i18n="opt_autodetect">Auto-detect ID from link</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="parallelProcessing" checked>
+                                    <label class="form-check-label text-secondary small" for="parallelProcessing" data-i18n="opt_parallel">Parallel processing (Fast)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progress mb-3" style="height: 6px; border-radius: 10px;">
+                            <div id="progressBar" class="progress-bar bg-info" style="width: 0%"></div>
+                        </div>
+                        
+                        <div id="activationStatus" class="alert p-2.5 small mb-4 d-flex align-items-center gap-2" style="background: #f8fafc; border: 1px solid var(--tg-border)">
+                            <i class="fas fa-info-circle text-info"></i>
+                            <span id="statusText" data-i18n="status_idle">Awaiting activation configuration...</span>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button id="activateButton" class="btn-premium-primary flex-grow-1">
+                                <i class="fas fa-bolt me-1"></i> <span data-i18n="btn_run">Execute Activation</span>
+                            </button>
+                            <button id="resetButton" class="btn btn-outline-secondary px-3" style="border-radius: 8px;">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-top">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="small text-secondary" data-i18n="batch_upload_title">TXT/CSV Batch Import</div>
+                                <button class="btn btn-link btn-sm p-0 text-decoration-none text-cyan" id="quickTest" data-i18n="btn_demo">Load Dummy Demo Data</button>
+                            </div>
+                            <div class="input-group input-group-sm mt-2">
+                                <input type="file" class="form-control" id="batchFile" accept=".txt,.csv">
+                                <button class="btn btn-outline-secondary" type="button" id="uploadBtn" data-i18n="btn_upload">Import</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="premium-card">
+                    <div class="card-header-custom justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-desktop text-pink"></i>
+                            <span data-i18n="card_monitor">Real-time Grid Monitor / 实时监视器</span>
+                        </div>
+                    </div>
+                    <div class="card-body-custom">
+                        <div id="pixelGrid" class="pixel-monitor-grid">
+                            <div class="w-100 text-center py-5" id="noPixelsMessage">
+                                <i class="fas fa-folder-open fa-2x text-light mb-2" style="color:#cbd5e1 !important"></i>
+                                <p class="text-muted small" data-i18n="msg_empty">No pixel parsed yet. Please supply data in configuration pane.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="premium-card">
+                    <div class="card-header-custom">
+                        <i class="fas fa-history text-secondary"></i>
+                        <span data-i18n="card_history">Execution History Log / 激活审计日志</span>
+                    </div>
+                    <div class="table-responsive" style="max-height: 300px;">
+                        <table class="table-premium">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_time">Timestamp</th>
+                                    <th data-i18n="th_id">Pixel ID</th>
+                                    <th data-i18n="th_event">Triggering Events</th>
+                                    <th data-i18n="th_val">Value</th>
+                                    <th data-i18n="th_status">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTable">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
 
-  <div class="card">
-    <h3>激活面板</h3>
-    <div class="row" style="margin-bottom:8px">
-      <label>事件类型：
-        <select id="eventType"></select>
-      </label>
-      <label>激活次数：
-        <input id="count" type="number" min="1" max="10000" value="1" />
-      </label>
-      <label>备注：
-        <input id="note" type="text" placeholder="可选（如渠道、批次号）" />
-      </label>
-      <button id="activateBtn">立即激活</button>
-    </div>
-    <p id="activateMsg" class="muted"></p>
-  </div>
+    <script>
+        // 多语言字典定义
+        const i18nTokens = {
+            zh: {
+                stat_total: "解析总像素数",
+                stat_active: "成功激活像素",
+                stat_events: "已下发事件数",
+                stat_rate: "任务成功率",
+                card_config: "控制配置中心",
+                card_monitor: "矩阵实时监视器",
+                card_history: "审计日志留痕",
+                label_pixel_ids: "Pixel IDs 集合 (逗号隔开多个):",
+                label_links: "激活落地页 Link 路由 (一行一个):",
+                opt_autodetect: "自动从 Link 中捕获特定参数 ID",
+                opt_parallel: "启用多线程高并发架构逻辑(高能快捷)",
+                status_idle: "就绪。等待输入必要的像素或链路凭证...",
+                status_err_empty: "未检测到有效 Pixel IDs 信息，请检查输入或导入数据。",
+                status_start: "底层初始化中... 准备处理共计 {n} 个像素单元。",
+                status_complete: "处理批次全部完成。请查阅监视面板审计日志状态。",
+                btn_run: "立即执行批量注入激活",
+                btn_demo: "载入标准测试沙盒数据",
+                btn_upload: "解析导入",
+                batch_upload_title: "外部纯文本源导入 (.txt / .csv)",
+                msg_empty: "暂无活动监控项。请在左侧填报数据后开启同步。",
+                th_time: "审计时间戳",
+                th_id: "目标像素 ID",
+                th_event: "下发事件链路",
+                th_val: "负载资产价值",
+                th_status: "最终状态",
+                badge_wait: "排队中",
+                badge_success: "完全激活",
+                badge_fail: "抛出异常"
+            },
+            en: {
+                stat_total: "Total Pixels",
+                stat_active: "Active Pixels",
+                stat_events: "Events Sent",
+                stat_rate: "Success Rate",
+                card_config: "Control Configuration Center",
+                card_monitor: "Real-time Grid Monitor",
+                card_history: "Audit Execution Log",
+                label_pixel_ids: "Pixel IDs (Comma separated):",
+                label_links: "Activation Links (One per line):",
+                opt_autodetect: "Auto-detect IDs from query URL strings",
+                opt_parallel: "Enable high-concurrency parallel tasks",
+                status_idle: "Awaiting tracking pixels or verification sources...",
+                status_err_empty: "No valid pixel specs found. Aborting execution.",
+                status_start: "Spinning up process environment... Processing {n} pixels.",
+                status_complete: "All synchronization completed successfully.",
+                btn_run: "Execute Direct Injections",
+                btn_demo: "Inject Dummy Sandbox Specs",
+                btn_upload: "Parse File",
+                batch_upload_title: "Import from localized text records (.txt / .csv)",
+                msg_empty: "No viewport data found. Ignite execution steps to display.",
+                th_time: "Timestamp",
+                th_id: "Pixel Tracking ID",
+                th_event: "Fired Trajectory",
+                th_val: "Payload Values",
+                th_status: "State",
+                badge_wait: "Awaiting",
+                badge_success: "Succeeded",
+                badge_fail: "Failed"
+            }
+        };
 
-  <div class="grid">
-    <div class="card">
-      <h3>事件类型统计</h3>
-      <table id="statsTbl">
-        <thead>
-          <tr><th>ID</th><th>Key</th><th>名称</th><th>状态</th><th>累计</th><th>今日</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <p class="muted" style="margin-top:8px">Tips：禁用/启用请在后端进行；这里仅展示状态。</p>
-    </div>
+        let currentLang = "zh";
 
-    <div class="card">
-      <h3>最近激活日志</h3>
-      <table id="logsTbl">
-        <thead>
-          <tr><th>ID</th><th>时间</th><th>事件</th><th>次数</th><th>备注</th><th>来源IP</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </div>
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const token = el.getAttribute('data-i18n');
+                if (i18nTokens[lang] && i18nTokens[lang][token]) {
+                    el.textContent = i18nTokens[lang][token];
+                }
+            });
+        }
 
-  <p class="muted">接口约定：GET <span class="kbd">/api/event-types</span>、POST <span class="kbd">/api/activate</span>、GET <span class="kbd">/api/activations?limit=50</span></p>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化语言
+            switchLanguage("zh");
+            document.getElementById('langSelector').addEventListener('change', (e)=> switchLanguage(e.target.value));
 
-<script>
-/** ====== 可配置项 ====== */
-// 改成你的后端地址（末尾不要斜杠）。如果在同域，保留空字符串即可：
-let API_BASE = ""; // 例如 "https://your-domain.com"
-// 初始是否开启假数据模式（本地打开建议 true）：
-let USE_MOCK = location.protocol === "file:";
+            const activateButton = document.getElementById('activateButton');
+            const resetButton = document.getElementById('resetButton');
+            const pixelIdsInput = document.getElementById('pixelIds');
+            const activationLinksInput = document.getElementById('activationLinks');
+            const progressBar = document.getElementById('progressBar');
+            const statusText = document.getElementById('statusText');
+            const historyTable = document.getElementById('historyTable');
+            const pixelGrid = document.getElementById('pixelGrid');
+            const noPixelsMessage = document.getElementById('noPixelsMessage');
+            const quickTest = document.getElementById('quickTest');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const batchFile = document.getElementById('batchFile');
+            
+            const totalPixelsElement = document.getElementById('totalPixels');
+            const activePixelsElement = document.getElementById('activePixels');
+            const totalEventsElement = document.getElementById('totalEvents');
+            const successRateElement = document.getElementById('successRate');
+            
+            let pixels = [];
+            let totalEvents = 0;
+            let successfulEvents = 0;
+            
+            activateButton.addEventListener('click', startActivation);
+            resetButton.addEventListener('click', resetForm);
+            quickTest.addEventListener('click', addSamplePixels);
+            uploadBtn.addEventListener('click', handleFileUpload);
+            
+            function startActivation() {
+                extractPixelsFromInputs();
+                if (pixels.length === 0) {
+                    statusText.textContent = i18nTokens[currentLang].status_err_empty;
+                    return;
+                }
+                
+                activateButton.disabled = true;
+                activateButton.innerHTML = `<i class="fas fa-circle-notch fa-spin me-2"></i>Running...`;
+                
+                statusText.textContent = i18nTokens[currentLang].status_start.replace("{n}", pixels.length);
+                updateProgress(10);
+                
+                const parallelProcessing = document.getElementById('parallelProcessing').checked;
+                if (parallelProcessing) {
+                    processPixelsInParallel();
+                } else {
+                    processPixelsInSequence();
+                }
+            }
+            
+            function processPixelsInParallel() {
+                const total = pixels.length;
+                let processed = 0;
+                
+                pixels.forEach(pixel => {
+                    setNodeState(pixel.id, 'running');
+                    activatePixel(pixel).then(() => {
+                        processed++;
+                        updateProgress(10 + (processed / total) * 90);
+                        if (processed === total) completeActivation();
+                    });
+                });
+            }
+            
+            function processPixelsInSequence() {
+                let index = 0;
+                const next = () => {
+                    if (index < pixels.length) {
+                        setNodeState(pixels[index].id, 'running');
+                        activatePixel(pixels[index]).then(() => {
+                            index++;
+                            updateProgress(10 + (index / pixels.length) * 90);
+                            next();
+                        });
+                    } else {
+                        completeActivation();
+                    }
+                };
+                next();
+            }
+            
+            async function activatePixel(pixel) {
+                try {
+                    await loadTikTokPixel(pixel.id);
+                    await triggerRegisterEvent(pixel.id);
+                    const txId = await triggerPurchaseEvent(pixel.id);
+                    
+                    updatePixelCardUI(pixel.id, 'success', txId);
+                    addToHistory(pixel.id, txId, 'success');
+                    return true;
+                } catch (error) {
+                    updatePixelCardUI(pixel.id, 'error');
+                    addToHistory(pixel.id, '', 'error');
+                    return false;
+                }
+            }
+            
+            function completeActivation() {
+                updateProgress(100);
+                statusText.textContent = i18nTokens[currentLang].status_complete;
+                activateButton.disabled = false;
+                activateButton.innerHTML = `<i class="fas fa-bolt me-1"></i> <span>${i18nTokens[currentLang].btn_run}</span>`;
+                updateStats();
+            }
 
-/** ====== DOM 引用 ====== */
-const selEvent = document.getElementById('eventType');
-const inputCount = document.getElementById('count');
-const inputNote = document.getElementById('note');
-const btnActivate = document.getElementById('activateBtn');
-const elActMsg = document.getElementById('activateMsg');
-const tblStatsBody = document.querySelector('#statsTbl tbody');
-const tblLogsBody = document.querySelector('#logsTbl tbody');
-const mockToggle = document.getElementById('mockToggle');
-const apiBaseText = document.getElementById('apiBaseText');
-
-mockToggle.checked = USE_MOCK;
-apiBaseText.textContent = USE_MOCK ? 'mock://local' : (API_BASE || '(同域)');
-
-/** ====== 假数据 ====== */
-let __mock_id_seed = 2000;
-const MOCK_TYPES = [
-  { id: 1, key: 'install', name: '安装/Install', enabled: 1, total_count: 10234, today_count: 123 },
-  { id: 2, key: 'purchase', name: '购买/Purchase', enabled: 1, total_count: 4567, today_count: 42 },
-  { id: 3, key: 'signup', name: '注册/Signup', enabled: 0, total_count: 987, today_count: 0 },
-];
-let MOCK_LOGS = Array.from({length: 20}).map((_,i) => ({
-  id: __mock_id_seed - i,
-  created_at: new Date(Date.now()-i*3600e3).toISOString(),
-  event_name: i%2? '购买/Purchase':'安装/Install',
-  event_key: i%2? 'purchase':'install',
-  count: (i%3)+1,
-  note: i%4? '渠道A':'' ,
-  actor_ip: '203.0.113.' + (50+i)
-}));
-
-/** ====== 小工具 ====== */
-function fmtTime(iso){ try{ return new Date(iso).toLocaleString(); }catch{ return iso; } }
-function el(tag, html){ const e=document.createElement(tag); e.innerHTML=html; return e; }
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-/** ====== 请求封装（支持 mock） ====== */
-async function apiGet(path){
-  if (USE_MOCK) {
-    await sleep(200);
-    if (path.startsWith('/api/event-types')) return JSON.parse(JSON.stringify(MOCK_TYPES));
-    if (path.startsWith('/api/activations')) return JSON.parse(JSON.stringify(MOCK_LOGS));
-    throw new Error('Mock 未实现 GET: ' + path);
-  }
-  const res = await fetch(API_BASE + path, { headers: { 'Content-Type':'application/json' }});
-  const data = await res.json().catch(()=> ({}));
-  if (!res.ok || data.ok === false) throw new Error(data.error || ('HTTP ' + res.status));
-  return data.data ?? data;
-}
-
-async function apiPost(path, body){
-  if (USE_MOCK) {
-    await sleep(200);
-    if (path === '/api/activate') {
-      const { event_type_id, count, note } = body || {};
-      const t = MOCK_TYPES.find(x=>x.id===Number(event_type_id));
-      if (!t) throw new Error('事件类型不存在（mock）');
-      if (!t.enabled) throw new Error('该事件类型已禁用（mock）');
-      t.total_count += Number(count)||0;
-      t.today_count += Number(count)||0;
-      MOCK_LOGS.unshift({
-        id: ++__mock_id_seed,
-        created_at: new Date().toISOString(),
-        event_name: t.name,
-        event_key: t.key,
-        count: Number(count)||0,
-        note: note || '',
-        actor_ip: '198.51.100.77'
-      });
-      return { event_type_id, count };
-    }
-    throw new Error('Mock 未实现 POST: ' + path);
-  }
-  const res = await fetch(API_BASE + path, {
-    method: 'POST',
-    headers: { 'Content-Type':'application/json' },
-    body: JSON.stringify(body || {})
-  });
-  const data = await res.json().catch(()=> ({}));
-  if (!res.ok || data.ok === false) throw new Error(data.error || ('HTTP ' + res.status));
-  return data.data ?? data;
-}
-
-/** ====== 渲染 ====== */
-function renderStats(rows){
-  selEvent.innerHTML = '';
-  tblStatsBody.innerHTML = '';
-  rows.forEach(row => {
-    const opt = document.createElement('option');
-    opt.value = row.id;
-    opt.textContent = `${row.name} (${row.key}) ${row.enabled ? '' : '【禁用】'}`;
-    if (!row.enabled) opt.disabled = true;
-    selEvent.appendChild(opt);
-
-    const status = row.enabled
-      ? `<span class="status-dot ok"></span>启用`
-      : `<span class="status-dot off"></span><span class="danger">禁用</span>`;
-    const tr = el('tr', `
-      <td>${row.id}</td>
-      <td>${row.key}</td>
-      <td>${row.name}</td>
-      <td>${status}</td>
-      <td>${row.total_count}</td>
-      <td>${row.today_count}</td>
-    `);
-    tblStatsBody.appendChild(tr);
-  });
-}
-
-function renderLogs(rows){
-  tblLogsBody.innerHTML = '';
-  rows.forEach(x => {
-    const tr = el('tr', `
-      <td>${x.id}</td>
-      <td>${fmtTime(x.created_at)}</td>
-      <td>${x.event_name} <span class="pill">${x.event_key}</span></td>
-      <td>${x.count}</td>
-      <td>${x.note || ''}</td>
-      <td>${x.actor_ip || ''}</td>
-    `);
-    tblLogsBody.appendChild(tr);
-  });
-}
-
-/** ====== 事件绑定 ====== */
-btnActivate.onclick = async () => {
-  const id = Number(selEvent.value);
-  const n = Number(inputCount.value);
-  const note = inputNote.value.trim();
-  elActMsg.textContent = '执行中...';
-  btnActivate.disabled = true;
-  try{
-    if (!Number.isInteger(n) || n<=0) throw new Error('次数必须为正整数');
-    if (n>10000) throw new Error('单次最多 10000 次');
-    await apiPost('/api/activate', { event_type_id: id, count: n, note });
-    elActMsg.innerHTML = '<span class="success">✅ 激活成功</span>';
-    await loadAll();
-    inputNote.value = '';
-  }catch(e){
-    elActMsg.innerHTML = '<span class="danger">❌ ' + (e.message || e.toString()) + '</span>';
-  }finally{
-    btnActivate.disabled = false;
-    setTimeout(()=> elActMsg.textContent='', 3000);
-  }
-};
-
-mockToggle.onchange = async () => {
-  USE_MOCK = mockToggle.checked;
-  apiBaseText.textContent = USE_MOCK ? 'mock://local' : (API_BASE || '(同域)');
-  await loadAll();
-};
-
-/** ====== 加载 ====== */
-async function loadAll(){
-  try {
-    const [types, logs] = await Promise.all([
-      apiGet('/api/event-types'),
-      apiGet('/api/activations?limit=50')
-    ]);
-    renderStats(types);
-    renderLogs(logs);
-  } catch (e) {
-    renderStats([]);
-    renderLogs([]);
-    elActMsg.innerHTML = '<span class="danger">加载失败：'+ (e.message || e) +'</span>';
-  }
-}
-
-loadAll();
-</script>
+            function setNodeState(pixelId, state) {
+                const badge = document.getElementById(`badge-${pixelId}`);
+                if(!badge) return;
+                if(state === 'running') {
+                    badge.className = "badge-dot bg-running";
+                    badge.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${i18nTokens[currentLang].badge_wait}`;
+                }
+            }
+            
+            function loadTikTokPixel(pixelId) {
+                return new Promise((resolve) => {
+                    if (window.ttq) delete window.ttq;
+                    let script = document.createElement('script');
+                    script.innerHTML = `
+                        !function (w, d, t) {
+                            w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+                            ttq.load('${pixelId}');
+                            ttq.page();
+                        }(window, document, 'ttq');
+                    `;
+                    document.head.appendChild(script);
+                    setTimeout(resolve, 120);
+                });
+            }
+            
+            function triggerRegisterEvent(pixelId) {
+                return new Promise((resolve) => {
+                    if (window.ttq) {
+                        try {
+                            ttq.instance(pixelId).track('Register', { content_type: 'activation', user_id: 'u_' + Math.floor(Math.random() * 1000) });
+                            totalEvents++; successfulEvents++;
+                        } catch (e) { totalEvents++; }
+                    }
+                    setTimeout(resolve, 100);
+                });
+            }
+            
+            function triggerPurchaseEvent(pixelId) {
+                return new Promise((resolve) => {
+                    const txId = 'TX-' + Math.floor(Math.random() * 899999 + 100000);
+                    if (window.ttq) {
+                        try {
+                            ttq.instance(pixelId).track('Purchase', { content_type: 'product', quantity: 1, price: 10, currency: 'BRL', value: 10, order_id: txId });
+                            totalEvents++; successfulEvents++;
+                        } catch (e) { totalEvents++; }
+                    }
+                    setTimeout(() => resolve(txId), 100);
+                });
+            }
+            
+            function extractPixelsFromInputs() {
+                pixels = [];
+                const rawIds = pixelIdsInput.value.trim();
+                if (rawIds) {
+                    rawIds.split(',').map(id => id.trim()).filter(id => id.length >= 5).forEach(id => {
+                        if(!pixels.some(p => p.id === id)) pixels.push({ id, source: 'direct' });
+                    });
+                }
+                
+                const rawLinks = activationLinksInput.value.trim();
+                if (rawLinks) {
+                    const autoDetect = document.getElementById('autoDetect').checked;
+                    rawLinks.split('\n').map(l => l.trim()).filter(l => l.length > 0).forEach(link => {
+                        let parsedId = autoDetect ? extractPixelIdFromLink(link) : link;
+                        if(parsedId && !pixels.some(p => p.id === parsedId)) {
+                            pixels.push({ id: parsedId, source: 'link' });
+                        }
+                    });
+                }
+                updatePixelGridUI();
+                updateStats();
+            }
+            
+            function extractPixelIdFromLink(link) {
+                try {
+                    const url = new URL(link);
+                    return url.searchParams.get('pixelId') || url.searchParams.get('id') || url.pathname.split('/').pop();
+                } catch (e) {
+                    return 'PXL' + Math.floor(Math.random() * 8999 + 1000);
+                }
+            }
+            
+            function updatePixelGridUI() {
+                if (pixels.length === 0) {
+                    noPixelsMessage.style.display = 'block';
+                    document.querySelectorAll('.pixel-card-node-real').forEach(el=>el.remove());
+                    return;
+                }
+                noPixelsMessage.style.display = 'none';
+                
+                // 清理旧节点
+                document.querySelectorAll('.pixel-card-node-real').forEach(el=>el.remove());
+                
+                pixels.forEach(pixel => {
+                    const div = document.createElement('div');
+                    div.className = 'pixel-status-node pixel-card-node-real';
+                    div.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold text-truncate" style="max-width:140px;">${pixel.id}</span>
+                            <span class="badge-dot bg-waiting" id="badge-${pixel.id}">
+                                <i class="far fa-clock"></i> ${i18nTokens[currentLang].badge_wait}
+                            </span>
+                        </div>
+                        <div class="text-muted" style="font-size:11px;" id="meta-${pixel.id}">Source: ${pixel.source}</div>
+                    `;
+                    pixelGrid.appendChild(div);
+                });
+            }
+            
+            function updatePixelCardUI(pixelId, status, txId = '') {
+                const badge = document.getElementById(`badge-${pixelId}`);
+                const meta = document.getElementById(`meta-${pixelId}`);
+                if (!badge) return;
+                
+                if (status === 'success') {
+                    badge.className = "badge-dot bg-success-lite";
+                    badge.innerHTML = `<i class="fas fa-check-circle"></i> ${i18nTokens[currentLang].badge_success}`;
+                    if(meta) meta.innerHTML = `Val: 10 BRL | ID: <span class="text-dark font-monospace">${txId}</span>`;
+                } else {
+                    badge.className = "badge-dot bg-danger-lite";
+                    badge.innerHTML = `<i class="fas fa-times-circle"></i> ${i18nTokens[currentLang].badge_fail}`;
+                }
+            }
+            
+            function addToHistory(pixelId, transactionId, status) {
+                const row = document.createElement('tr');
+                const timeStr = new Date().toLocaleTimeString();
+                const isSuccess = status === 'success';
+                
+                row.innerHTML = `
+                    <td class="text-secondary">${timeStr}</td>
+                    <td class="font-monospace fw-bold">${pixelId}</td>
+                    <td><span class="text-xs text-muted">Register, Purchase</span></td>
+                    <td>${isSuccess ? '10 BRL' : 'N/A'}</td>
+                    <td>
+                        <span class="badge ${isSuccess?'bg-success':'bg-danger'} bg-opacity-10 ${isSuccess?'text-success':'text-danger'} px-2 py-1 small">
+                            ${isSuccess ? i18nTokens[currentLang].badge_success : i18nTokens[currentLang].badge_fail}
+                        </span>
+                    </td>
+                `;
+                historyTable.insertBefore(row, historyTable.firstChild);
+            }
+            
+            function updateProgress(percent) {
+                progressBar.style.width = percent + '%';
+            }
+            
+            function resetForm() {
+                pixelIdsInput.value = '';
+                activationLinksInput.value = '';
+                pixels = [];
+                updateProgress(0);
+                statusText.textContent = i18nTokens[currentLang].status_idle;
+                updatePixelGridUI();
+                updateStats();
+            }
+            
+            function addSamplePixels() {
+                pixelIdsInput.value = 'CM3C2F77SJN5G97J9UR0, A1B2C3D4E5F6G7H8I9J0, TK99210484A';
+                activationLinksInput.value = 'https://dummy-landing.com/pay?pixelId=TEST888999';
+                extractPixelsFromInputs();
+            }
+            
+            function handleFileUpload() {
+                const file = batchFile.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const lines = e.target.result.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                    let ids = [], links = [];
+                    lines.forEach(line => {
+                        if(line.includes('http')) links.push(line);
+                        else if(line.length >= 5) ids.push(line);
+                    });
+                    if(ids.length) pixelIdsInput.value = ids.join(', ');
+                    if(links.length) activationLinksInput.value = links.join('\n');
+                    extractPixelsFromInputs();
+                };
+                reader.readAsText(file);
+            }
+            
+            function updateStats() {
+                totalPixelsElement.textContent = pixels.length;
+                const activeCount = pixels.filter(p => {
+                    const el = document.getElementById(`badge-${p.id}`);
+                    return el && el.textContent.includes(i18nTokens[currentLang].badge_success);
+                }).length;
+                
+                activePixelsElement.textContent = activeCount;
+                totalEventsElement.textContent = totalEvents;
+                successRateElement.textContent = totalEvents > 0 ? `${Math.round((successfulEvents / totalEvents) * 100)}%` : '100%';
+            }
+        });
+    </script>
 </body>
 </html>
