@@ -3,342 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Multi-Pixel Activator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>⚡ TikTok Multi-Pixel Nexus</title>
+    <!-- 引入高级现代字体 Inter & Fira Code (用于代码/ID显示) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --tg-bg-main: #f4f6f9;
-            --tg-surface: #ffffff;
-            --tg-primary: #0f172a; /* 深邃邃蓝，更显专业 */
-            --tg-accent-cyan: #06b6d4;
-            --tg-accent-pink: #f43f5e;
-            --tg-text-main: #1e293b;
-            --tg-text-muted: #64748b;
-            --tg-border: #e2e8f0;
-            --tg-success: #10b981;
-            --tg-danger: #ef4444;
+            --bg-dark: #090d16;
+            --bg-card: rgba(17, 25, 40, 0.65);
+            --border-glow: rgba(255, 255, 255, 0.06);
+            --border-focus: #00f2fe;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            
+            /* 霓虹高级发光色 */
+            --glow-cyan: #00f2fe;
+            --glow-pink: #4facfe;
+            --glow-success: #00f5a0;
+            --glow-error: #ff416c;
         }
 
         body {
-            background-color: var(--tg-bg-main);
-            color: var(--tg-text-main);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            font-size: 0.95rem;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(79, 172, 254, 0.05) 0%, transparent 40%);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* 顶部导航与语言切换 */
-        .navbar-custom {
-            background-color: var(--tg-surface);
-            border-bottom: 1px solid var(--tg-border);
-            padding: 1rem 2rem;
+        /* 极简网格背景线（高级感核心） */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .brand-title {
+        /* 导航栏毛玻璃效果 */
+        .navbar-nexus {
+            background: rgba(9, 13, 22, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 1.25rem 2rem;
+        }
+
+        .brand-nexus {
             font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--tg-primary);
+            letter-spacing: -0.05em;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
-        /* 卡片重构：扁平化、高级阴影与微光流边 */
-        .premium-card {
-            background: var(--tg-surface);
-            border: 1px solid var(--tg-border);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: all 0.25s ease;
-            height: 100%;
-        }
-        
-        .premium-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        /* 高级悬浮卡片（毛玻璃 + 边框微光） */
+        .nexus-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 1.75rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .card-header-custom {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--tg-border);
+        .nexus-card:hover {
+            border-color: rgba(0, 242, 254, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 242, 254, 0.05);
+        }
+
+        .card-title-nexus {
+            font-size: 1.1rem;
             font-weight: 600;
-            color: var(--tg-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--text-primary);
         }
 
-        .card-body-custom {
-            padding: 1.5rem;
-        }
-
-        /* 核心看板组件 */
-        .stat-grid {
+        /* 看板指标数字 */
+        .stat-nexus-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
         }
 
-        .stat-card-mini {
-            background: var(--tg-surface);
-            border: 1px solid var(--tg-border);
-            border-radius: 10px;
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
+        .stat-nexus-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .stat-value {
-            font-size: 1.75rem;
+        .stat-nexus-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--border-focus), transparent);
+            opacity: 0.3;
+        }
+
+        .stat-nexus-value {
+            font-size: 2.25rem;
             font-weight: 700;
-            color: var(--tg-primary);
-            line-height: 1.2;
-            margin-top: 0.25rem;
+            letter-spacing: -0.03em;
+            font-family: 'Fira Code', monospace;
+            margin-top: 0.5rem;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--tg-text-muted);
-            font-weight: 500;
+        /* 磨砂输入框 */
+        .input-nexus {
+            background: rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid var(--border-glow) !important;
+            color: var(--text-primary) !important;
+            border-radius: 10px !important;
+            padding: 0.85rem 1.2rem !important;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s !important;
         }
 
-        /* 表单与输入精细化方案 */
-        .form-control-custom {
-            border: 1px solid var(--tg-border);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            background-color: #f8fafc;
-            transition: all 0.2s;
-        }
-
-        .form-control-custom:focus {
-            background-color: var(--tg-surface);
-            border-color: var(--tg-accent-cyan);
-            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+        .input-nexus:focus {
+            border-color: var(--border-focus) !important;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15) !important;
             outline: none;
         }
 
-        /* 动态像素网格 */
-        .pixel-monitor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1rem;
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 0.25rem;
-        }
-
-        .pixel-status-node {
-            background: #f8fafc;
-            border: 1px solid var(--tg-border);
-            border-radius: 8px;
-            padding: 1rem;
-            font-size: 0.85rem;
-        }
-
-        /* 各种按钮风格 */
-        .btn-premium-primary {
-            background: var(--tg-primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+        /* 未来感控制按钮 */
+        .btn-nexus-primary {
+            background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink));
+            color: #090d16;
             font-weight: 600;
-            transition: all 0.2s;
+            border: none;
+            padding: 0.85rem 2rem;
+            border-radius: 10px;
+            letter-spacing: -0.01em;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.2);
         }
 
-        .btn-premium-primary:hover {
+        .btn-nexus-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.4);
+            opacity: 0.95;
+        }
+
+        .btn-nexus-primary:disabled {
             background: #1e293b;
-            transform: translateY(-1px);
-        }
-
-        .btn-premium-primary:disabled {
-            background: var(--tg-border);
-            color: var(--tg-text-muted);
+            color: var(--text-secondary);
+            box-shadow: none;
             transform: none;
         }
 
-        /* 状态微章 */
-        .badge-dot {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            font-weight: 600;
-            padding: 0.25rem 0.625rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
+        /* 实时状态网格呼吸灯 */
+        .grid-nexus-monitor {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
+            max-height: 430px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
         }
 
-        .bg-waiting { background: #f1f5f9; color: #475569; }
-        .bg-running { background: #e0f2fe; color: #0369a1; }
-        .bg-success-lite { background: #d1e7dd; color: #0f5132; }
-        .bg-danger-lite { background: #f8d7da; color: #842029; }
+        /* 自定义美化滚动条 */
+        .grid-nexus-monitor::-webkit-scrollbar { width: 6px; }
+        .grid-nexus-monitor::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
 
-        /* 历史表格设计 */
-        .table-premium {
+        .node-nexus {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.25rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        /* 呼吸量子灯 */
+        .cyber-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+        }
+        .dot-waiting { background-color: #64748b; }
+        .dot-running { 
+            background-color: var(--glow-cyan); 
+            box-shadow: 0 0 10px var(--glow-cyan);
+            animation: cyber-pulse 1.5s infinite;
+        }
+        .dot-success { background-color: var(--glow-success); box-shadow: 0 0 10px var(--glow-success); }
+        .dot-error { background-color: var(--glow-error); box-shadow: 0 0 10px var(--glow-error); }
+
+        @keyframes cyber-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 现代暗色表格 */
+        .table-nexus {
             width: 100%;
-            border-collapse: collapse;
-            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+        .table-nexus th {
+            background: rgba(255,255,255,0.01);
+            color: var(--text-secondary);
+            padding: 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-bottom: 1px solid var(--border-glow);
+        }
+        .table-nexus td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            font-size: 0.9rem;
         }
 
-        .table-premium th {
-            background: #f8fafc;
-            color: var(--tg-text-muted);
-            padding: 0.85rem 1rem;
-            font-weight: 600;
-            text-align: left;
-            border-bottom: 1px solid var(--tg-border);
-        }
-
-        .table-premium td {
-            padding: 0.85rem 1rem;
-            border-bottom: 1px solid var(--tg-border);
-            color: var(--tg-text-main);
+        /* 极简高亮小标签 */
+        .tag-nexus {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glow);
+            border-radius: 6px;
+            color: var(--text-secondary);
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar-custom d-flex justify-content-between align-items-center">
-        <div class="brand-title">
-            <i class="fab fa-tiktok text-dark"></i>
-            <span>TikTok Multi-Pixel Activator</span>
+    <!-- 顶部极简导航 -->
+    <nav class="navbar-custom navbar-nexus d-flex justify-content-between align-items-center">
+        <div class="brand-nexus">
+            <i class="fab fa-tiktok"></i>
+            <span>PIXEL NEXUS // ACTIVATOR</span>
         </div>
         <div>
-            <select class="form-select form-select-sm" id="langSelector" style="width: 120px; border-radius: 6px;">
-                <option value="zh">简体中文</option>
-                <option value="en">English</option>
+            <select class="form-select form-select-sm input-nexus" id="langSelector" style="width: 110px;">
+                <option value="zh">ZH / 中文</option>
+                <option value="en">EN / English</option>
             </select>
         </div>
     </nav>
 
-    <div class="container-fluid px-4 py-4">
-        <div class="stat-grid">
-            <div class="stat-card-mini">
-                <span class="stat-label" data-i18n="stat_total">Total Pixels / 总像素数</span>
-                <span class="stat-value" id="totalPixels">0</span>
+    <div class="container-fluid px-5 py-4">
+        
+        <!-- 大厂同款：核心看板数据网格 -->
+        <div class="stat-nexus-grid">
+            <div class="stat-nexus-card">
+                <div class="small text-muted" data-i18n="stat_total">TOTAL PIXELS / 像素总控</div>
+                <div class="stat-nexus-value" id="totalPixels">0</div>
             </div>
-            <div class="stat-card-mini">
-                <span class="stat-label" data-i18n="stat_active">Active Pixels / 已激活像素</span>
-                <span class="stat-value text-info" id="activePixels">0</span>
+            <div class="stat-nexus-card">
+                <div class="small text-muted" data-i18n="stat_active">ACTIVE PIXELS / 已成功激活</div>
+                <div class="stat-nexus-value" id="activePixels" style="background: linear-gradient(180deg, #00f5a0, #00d9f5); -webkit-background-clip: text;">0</div>
             </div>
-            <div class="stat-card-mini">
-                <span class="stat-label" data-i18n="stat_events">Events Sent / 已发事件数</span>
-                <span class="stat-value text-purple" id="totalEvents">0</span>
+            <div class="stat-nexus-card">
+                <div class="small text-muted" data-i18n="stat_events">TRAFFIC EVENTS / 已发重放事件</div>
+                <div class="stat-nexus-value" id="totalEvents">0</div>
             </div>
-            <div class="stat-card-mini">
-                <span class="stat-label" data-i18n="stat_rate">Success Rate / 激活成功率</span>
-                <span class="stat-value text-success" id="successRate">100%</span>
+            <div class="stat-nexus-card">
+                <div class="small text-muted" data-i18n="stat_rate">SUCCESS RATE / 全链路成功率</div>
+                <div class="stat-nexus-value" id="successRate" style="background: linear-gradient(180deg, #4facfe, #00f2fe); -webkit-background-clip: text;">100%</div>
             </div>
         </div>
 
         <div class="row g-4">
+            <!-- 左侧核心操作卡片 -->
             <div class="col-xl-6">
-                <div class="premium-card">
-                    <div class="card-header-custom">
-                        <i class="fas fa-sliders-h text-cyan"></i>
-                        <span data-i18n="card_config">Configuration / 配置中心</span>
+                <div class="nexus-card">
+                    <div class="card-title-nexus">
+                        <i class="fas fa-terminal" style="color: var(--glow-cyan)"></i>
+                        <span data-i18n="card_config">INJECTOR CONFIGURATION / 注入源配置</span>
                     </div>
-                    <div class="card-body-custom">
-                        
-                        <div class="mb-3">
-                            <label class="form-label fw-medium" data-i18n="label_pixel_ids">Pixel IDs (Comma separated)</label>
-                            <textarea class="form-control form-control-custom" id="pixelIds" rows="3" placeholder="e.g. CM3C2F77SJN5G97J9UR0, A1B2C3D4E5F6G7H8I9J0"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-medium" data-i18n="label_links">Activation Links (One per line)</label>
-                            <textarea class="form-control form-control-custom" id="activationLinks" rows="3" placeholder="https://example.com/activate?id=CM3C2F77SJN5G97J9UR0"></textarea>
-                        </div>
-
-                        <div class="row mb-4">
-                            <div class="col-sm-6">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="autoDetect" checked>
-                                    <label class="form-check-label text-secondary small" for="autoDetect" data-i18n="opt_autodetect">Auto-detect ID from link</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="parallelProcessing" checked>
-                                    <label class="form-check-label text-secondary small" for="parallelProcessing" data-i18n="opt_parallel">Parallel processing (Fast)</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="progress mb-3" style="height: 6px; border-radius: 10px;">
-                            <div id="progressBar" class="progress-bar bg-info" style="width: 0%"></div>
-                        </div>
-                        
-                        <div id="activationStatus" class="alert p-2.5 small mb-4 d-flex align-items-center gap-2" style="background: #f8fafc; border: 1px solid var(--tg-border)">
-                            <i class="fas fa-info-circle text-info"></i>
-                            <span id="statusText" data-i18n="status_idle">Awaiting activation configuration...</span>
-                        </div>
-
-                        <div class="d-flex gap-2">
-                            <button id="activateButton" class="btn-premium-primary flex-grow-1">
-                                <i class="fas fa-bolt me-1"></i> <span data-i18n="btn_run">Execute Activation</span>
-                            </button>
-                            <button id="resetButton" class="btn btn-outline-secondary px-3" style="border-radius: 8px;">
-                                <i class="fas fa-redo"></i>
-                            </button>
-                        </div>
-
-                        <div class="mt-4 pt-3 border-top">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="small text-secondary" data-i18n="batch_upload_title">TXT/CSV Batch Import</div>
-                                <button class="btn btn-link btn-sm p-0 text-decoration-none text-cyan" id="quickTest" data-i18n="btn_demo">Load Dummy Demo Data</button>
-                            </div>
-                            <div class="input-group input-group-sm mt-2">
-                                <input type="file" class="form-control" id="batchFile" accept=".txt,.csv">
-                                <button class="btn btn-outline-secondary" type="button" id="uploadBtn" data-i18n="btn_upload">Import</button>
-                            </div>
-                        </div>
-
+                    
+                    <div class="mb-4">
+                        <label class="form-label text-muted small fw-bold" data-i18n="label_pixel_ids">PIXEL INSTANCE IDS</label>
+                        <textarea class="form-control input-nexus" id="pixelIds" rows="3" placeholder="Paste IDs separated by commas..."></textarea>
                     </div>
-                </div>
-            </div>
 
-            <div class="col-xl-6">
-                <div class="premium-card">
-                    <div class="card-header-custom justify-content-between">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="fas fa-desktop text-pink"></i>
-                            <span data-i18n="card_monitor">Real-time Grid Monitor / 实时监视器</span>
+                    <div class="mb-4">
+                        <label class="form-label text-muted small fw-bold" data-i18n="label_links">WEBHOOK / LANDING ACTIVATION LINKS</label>
+                        <textarea class="form-control input-nexus" id="activationLinks" rows="3" placeholder="Paste links, one per line..."></textarea>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="autoDetect" checked>
+                                <label class="form-check-label text-muted small" for="autoDetect" data-i18n="opt_autodetect">URL Parameter Auto-Extraction</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="parallelProcessing" checked>
+                                <label class="form-check-label text-muted small" for="parallelProcessing" data-i18n="opt_parallel">High-Concurrency Async Mode</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body-custom">
-                        <div id="pixelGrid" class="pixel-monitor-grid">
-                            <div class="w-100 text-center py-5" id="noPixelsMessage">
-                                <i class="fas fa-folder-open fa-2x text-light mb-2" style="color:#cbd5e1 !important"></i>
-                                <p class="text-muted small" data-i18n="msg_empty">No pixel parsed yet. Please supply data in configuration pane.</p>
-                            </div>
+
+                    <!-- 极细科技感进度条 -->
+                    <div class="progress mb-3" style="height: 3px; background: rgba(255,255,255,0.05);">
+                        <div id="progressBar" class="progress-bar" style="width: 0%; background: linear-gradient(90deg, var(--glow-cyan), var(--glow-pink)); transition: width 0.4s ease;"></div>
+                    </div>
+
+                    <div id="activationStatus" class="p-3 mb-4 rounded-3 d-flex align-items-center gap-3" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03);">
+                        <div class="cyber-dot dot-running" id="statusLight"></div>
+                        <span id="statusText" class="small text-muted" data-i18n="status_idle">System core stands ready. Awaiting payload...</span>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <button id="activateButton" class="btn-nexus-primary flex-grow-1">
+                            <i class="fas fa-satellite-dish me-2"></i><span data-i18n="btn_run">FIRE INJECTION</span>
+                        </button>
+                        <button id="resetButton" class="btn btn-dark px-4" style="border-radius: 10px; border: 1px solid var(--border-glow);">
+                            <i class="fas fa-power-off text-muted"></i>
+                        </button>
+                    </div>
+
+                    <!-- 底部高级隐藏导入 -->
+                    <div class="mt-4 pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small text-muted fw-bold" data-i18n="batch_upload_title">RAW STREAMING IMPORT (.TXT/.CSV)</span>
+                            <button class="btn btn-link btn-sm p-0 text-decoration-none text-info small" id="quickTest" data-i18n="btn_demo">// Load Sandbox Dataset</button>
+                        </div>
+                        <div class="input-group">
+                            <input type="file" class="form-control input-nexus text-muted form-control-sm" id="batchFile">
+                            <button class="btn btn-secondary btn-sm px-3 small" style="border-radius:0 10px 10px 0" type="button" id="uploadBtn" data-i18n="btn_upload">PARSED</button>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- 右侧矩阵监控盘 -->
+            <div class="col-xl-6">
+                <div class="nexus-card h-100">
+                    <div class="card-title-nexus">
+                        <i class="fas fa-wave-square" style="color: var(--glow-pink)"></i>
+                        <span data-i18n="card_monitor">REAL-TIME INSTANCE MATRIX / 实例监控矩阵</span>
+                    </div>
+                    
+                    <div id="pixelGrid" class="grid-nexus-monitor">
+                        <!-- 空白占位符 -->
+                        <div class="w-100 text-center py-5 my-5" id="noPixelsMessage">
+                            <i class="fas fa-project-diagram fa-2x mb-3" style="color: rgba(255,255,255,0.05)"></i>
+                            <p class="text-muted small" data-i18n="msg_empty">No live streaming telemetry detected. Awaiting tactical execution.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部审计日志面板 -->
             <div class="col-12 mt-2">
-                <div class="premium-card">
-                    <div class="card-header-custom">
-                        <i class="fas fa-history text-secondary"></i>
-                        <span data-i18n="card_history">Execution History Log / 激活审计日志</span>
+                <div class="nexus-card">
+                    <div class="card-title-nexus">
+                        <i class="fas fa-history text-muted"></i>
+                        <span data-i18n="card_history">全链路追溯审计日志 / TOTAL AUDIT TRAIL</span>
                     </div>
-                    <div class="table-responsive" style="max-height: 300px;">
-                        <table class="table-premium">
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table-nexus">
                             <thead>
                                 <tr>
-                                    <th data-i18n="th_time">Timestamp</th>
-                                    <th data-i18n="th_id">Pixel ID</th>
-                                    <th data-i18n="th_event">Triggering Events</th>
-                                    <th data-i18n="th_val">Value</th>
-                                    <th data-i18n="th_status">Status</th>
+                                    <th data-i18n="th_time">TIMESTAMP</th>
+                                    <th data-i18n="th_id">PIXEL INSTANCE ID</th>
+                                    <th data-i18n="th_event">EVENT ROUTE</th>
+                                    <th data-i18n="th_val">PAYLOAD VALUE</th>
+                                    <th data-i18n="th_status">TELEMETRY STATE</th>
                                 </tr>
                             </thead>
                             <tbody id="historyTable">
-                                </tbody>
+                                <!-- 跑数动态追加点 -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -347,68 +404,68 @@
         </div>
     </div>
 
+    <!-- 驱动内核逻辑 -->
     <script>
-        // 多语言字典定义
         const i18nTokens = {
             zh: {
-                stat_total: "解析总像素数",
-                stat_active: "成功激活像素",
-                stat_events: "已下发事件数",
-                stat_rate: "任务成功率",
-                card_config: "控制配置中心",
-                card_monitor: "矩阵实时监视器",
-                card_history: "审计日志留痕",
-                label_pixel_ids: "Pixel IDs 集合 (逗号隔开多个):",
-                label_links: "激活落地页 Link 路由 (一行一个):",
-                opt_autodetect: "自动从 Link 中捕获特定参数 ID",
-                opt_parallel: "启用多线程高并发架构逻辑(高能快捷)",
-                status_idle: "就绪。等待输入必要的像素或链路凭证...",
-                status_err_empty: "未检测到有效 Pixel IDs 信息，请检查输入或导入数据。",
-                status_start: "底层初始化中... 准备处理共计 {n} 个像素单元。",
-                status_complete: "处理批次全部完成。请查阅监视面板审计日志状态。",
-                btn_run: "立即执行批量注入激活",
-                btn_demo: "载入标准测试沙盒数据",
-                btn_upload: "解析导入",
-                batch_upload_title: "外部纯文本源导入 (.txt / .csv)",
-                msg_empty: "暂无活动监控项。请在左侧填报数据后开启同步。",
-                th_time: "审计时间戳",
-                th_id: "目标像素 ID",
-                th_event: "下发事件链路",
-                th_val: "负载资产价值",
-                th_status: "最终状态",
-                badge_wait: "排队中",
-                badge_success: "完全激活",
-                badge_fail: "抛出异常"
+                stat_total: "PIXEL PARSED // 载入实例总数",
+                stat_active: "INJECTED SUCCESS // 成功激活实例",
+                stat_events: "TELEMETRY TRAFFIC // 下发重放事件",
+                stat_rate: "STABILITY RATE // 核心全链率",
+                card_config: "INJECTOR CORE CONFIG // 核心注入源配置",
+                card_monitor: "REAL-TIME METRIC MATRIX // 矩阵实时监视器",
+                card_history: "CRYPTO AUDIT TRAIL LOGS // 全链路追溯审计日志",
+                label_pixel_ids: "PIXEL INSTANCE IDS (以逗号 `,` 分隔或换行拼装)",
+                label_links: "LANDING ATTRIBUTION ROUTERS (重定向链路，一行一个)",
+                opt_autodetect: "允许核心算法自清洗 URL 包含的特定 ID 字符串",
+                opt_parallel: "启用异步多线程并发框架方案 (加速重放过程)",
+                status_idle: "量子引擎内核已就绪。等待注入目标负载...",
+                status_err_empty: "未捕获到任何格式合规的序列，请求已被核心终止保护。",
+                status_start: "正在向当前调度环境推送共计 {n} 组像素包...",
+                status_complete: "批次序列下发完成。全链注入流同步成功。",
+                btn_run: "分发执行全链重放激活",
+                btn_demo: "调取内部标准沙盒数据集",
+                btn_upload: "全自动清洗导入",
+                batch_upload_title: "本地结构化原始数据流格式重构 (.TXT / .CSV)",
+                msg_empty: "主矩阵中未检测到存活的心跳监控节点。请配置源数据后执行下发。",
+                th_time: "记录纪元",
+                th_id: "目标像素单元 ID",
+                th_event: "触发表单链路",
+                th_val: "负载资产重放价值",
+                th_status: "遥测判定响应",
+                badge_wait: "待下发",
+                badge_success: "注入成功",
+                badge_fail: "抛出致命异常"
             },
             en: {
-                stat_total: "Total Pixels",
-                stat_active: "Active Pixels",
-                stat_events: "Events Sent",
-                stat_rate: "Success Rate",
-                card_config: "Control Configuration Center",
-                card_monitor: "Real-time Grid Monitor",
-                card_history: "Audit Execution Log",
-                label_pixel_ids: "Pixel IDs (Comma separated):",
-                label_links: "Activation Links (One per line):",
-                opt_autodetect: "Auto-detect IDs from query URL strings",
-                opt_parallel: "Enable high-concurrency parallel tasks",
-                status_idle: "Awaiting tracking pixels or verification sources...",
-                status_err_empty: "No valid pixel specs found. Aborting execution.",
-                status_start: "Spinning up process environment... Processing {n} pixels.",
-                status_complete: "All synchronization completed successfully.",
-                btn_run: "Execute Direct Injections",
-                btn_demo: "Inject Dummy Sandbox Specs",
-                btn_upload: "Parse File",
-                batch_upload_title: "Import from localized text records (.txt / .csv)",
-                msg_empty: "No viewport data found. Ignite execution steps to display.",
-                th_time: "Timestamp",
-                th_id: "Pixel Tracking ID",
-                th_event: "Fired Trajectory",
-                th_val: "Payload Values",
-                th_status: "State",
-                badge_wait: "Awaiting",
-                badge_success: "Succeeded",
-                badge_fail: "Failed"
+                stat_total: "PIXEL PARSED // INSTANCES TOTAL",
+                stat_active: "INJECTED SUCCESS // ACTIVE INSTANCES",
+                stat_events: "TELEMETRY TRAFFIC // EVENTS RECORDED",
+                stat_rate: "STABILITY RATE // PIPELINE INTEGRITY",
+                card_config: "INJECTOR CORE CONFIGURATION",
+                card_monitor: "REAL-TIME METRIC MATRIX MONITOR",
+                card_history: "DECENTRALIZED AUDIT TRAIL SNAPSHOTS",
+                label_pixel_ids: "PIXEL INSTANCE IDS (COMMA SEPARATED MATRIX)",
+                label_links: "LANDING ATTRIBUTION ROUTERS (ONE URL PER LINE)",
+                opt_autodetect: "Allow algorithmic parameter extraction from url query strings",
+                opt_parallel: "Deploy multi-threaded concurrent processing cluster",
+                status_idle: "Nexus core online. Standing by for strategic telemetry payload...",
+                status_err_empty: "No valid byte sequence mapped. Process rejected by kernel.",
+                status_start: "Pushing {n} tracking blocks down to deployment layer...",
+                status_complete: "All scheduled telemetry vectors dispatched successfully.",
+                btn_run: "DISPATCH SIGNAL STREAM",
+                btn_demo: "Load Internal Sandbox Mockups",
+                btn_upload: "PARSE RECORDS",
+                batch_upload_title: "STREAM IMPORT LOCAL ENCRYPTED LOGS (.TXT / .CSV)",
+                msg_empty: "No active node telemetry streaming in matrix dashboard viewport.",
+                th_time: "EPOCH SECONDS",
+                th_id: "TRACKING NODE ID",
+                th_event: "TRAJECTORY STACK",
+                th_val: "PAYLOAD WEIGHT",
+                th_status: "TELEMETRY RESPONSE",
+                badge_wait: "QUEUED",
+                badge_success: "INJECTED",
+                badge_fail: "CRITICAL REJECTION"
             }
         };
 
@@ -425,7 +482,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // 初始化语言
             switchLanguage("zh");
             document.getElementById('langSelector').addEventListener('change', (e)=> switchLanguage(e.target.value));
 
@@ -435,6 +491,7 @@
             const activationLinksInput = document.getElementById('activationLinks');
             const progressBar = document.getElementById('progressBar');
             const statusText = document.getElementById('statusText');
+            const statusLight = document.getElementById('statusLight');
             const historyTable = document.getElementById('historyTable');
             const pixelGrid = document.getElementById('pixelGrid');
             const noPixelsMessage = document.getElementById('noPixelsMessage');
@@ -460,24 +517,26 @@
                 extractPixelsFromInputs();
                 if (pixels.length === 0) {
                     statusText.textContent = i18nTokens[currentLang].status_err_empty;
+                    statusLight.className = "cyber-dot dot-error";
                     return;
                 }
                 
                 activateButton.disabled = true;
-                activateButton.innerHTML = `<i class="fas fa-circle-notch fa-spin me-2"></i>Running...`;
+                activateButton.innerHTML = `<i class="fas fa-circle-notch fa-spin me-2"></i>BROADCASTING...`;
+                statusLight.className = "cyber-dot dot-running";
                 
                 statusText.textContent = i18nTokens[currentLang].status_start.replace("{n}", pixels.length);
-                updateProgress(10);
+                updateProgress(15);
                 
-                const parallelProcessing = document.getElementById('parallelProcessing').checked;
-                if (parallelProcessing) {
-                    processPixelsInParallel();
+                const parallel = document.getElementById('parallelProcessing').checked;
+                if (parallel) {
+                    processParallel();
                 } else {
-                    processPixelsInSequence();
+                    processSequence();
                 }
             }
             
-            function processPixelsInParallel() {
+            function processParallel() {
                 const total = pixels.length;
                 let processed = 0;
                 
@@ -485,20 +544,20 @@
                     setNodeState(pixel.id, 'running');
                     activatePixel(pixel).then(() => {
                         processed++;
-                        updateProgress(10 + (processed / total) * 90);
+                        updateProgress(15 + (processed / total) * 85);
                         if (processed === total) completeActivation();
                     });
                 });
             }
             
-            function processPixelsInSequence() {
+            function processSequence() {
                 let index = 0;
                 const next = () => {
                     if (index < pixels.length) {
                         setNodeState(pixels[index].id, 'running');
                         activatePixel(pixels[index]).then(() => {
                             index++;
-                            updateProgress(10 + (index / pixels.length) * 90);
+                            updateProgress(15 + (index / pixels.length) * 85);
                             next();
                         });
                     } else {
@@ -527,18 +586,15 @@
             function completeActivation() {
                 updateProgress(100);
                 statusText.textContent = i18nTokens[currentLang].status_complete;
+                statusLight.className = "cyber-dot dot-success";
                 activateButton.disabled = false;
-                activateButton.innerHTML = `<i class="fas fa-bolt me-1"></i> <span>${i18nTokens[currentLang].btn_run}</span>`;
+                activateButton.innerHTML = `<i class="fas fa-satellite-dish me-2"></i><span>${i18nTokens[currentLang].btn_run}</span>`;
                 updateStats();
             }
 
             function setNodeState(pixelId, state) {
-                const badge = document.getElementById(`badge-${pixelId}`);
-                if(!badge) return;
-                if(state === 'running') {
-                    badge.className = "badge-dot bg-running";
-                    badge.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${i18nTokens[currentLang].badge_wait}`;
-                }
+                const dot = document.getElementById(`dot-${pixelId}`);
+                if(dot && state === 'running') dot.className = "cyber-dot dot-running";
             }
             
             function loadTikTokPixel(pixelId) {
@@ -553,7 +609,7 @@
                         }(window, document, 'ttq');
                     `;
                     document.head.appendChild(script);
-                    setTimeout(resolve, 120);
+                    setTimeout(resolve, 100);
                 });
             }
             
@@ -565,7 +621,7 @@
                             totalEvents++; successfulEvents++;
                         } catch (e) { totalEvents++; }
                     }
-                    setTimeout(resolve, 100);
+                    setTimeout(resolve, 80);
                 });
             }
             
@@ -578,7 +634,7 @@
                             totalEvents++; successfulEvents++;
                         } catch (e) { totalEvents++; }
                     }
-                    setTimeout(() => resolve(txId), 100);
+                    setTimeout(() => resolve(txId), 80);
                 });
             }
             
@@ -587,7 +643,7 @@
                 const rawIds = pixelIdsInput.value.trim();
                 if (rawIds) {
                     rawIds.split(',').map(id => id.trim()).filter(id => id.length >= 5).forEach(id => {
-                        if(!pixels.some(p => p.id === id)) pixels.push({ id, source: 'direct' });
+                        if(!pixels.some(p => p.id === id)) pixels.push({ id, source: 'DIRECT_ID' });
                     });
                 }
                 
@@ -597,7 +653,7 @@
                     rawLinks.split('\n').map(l => l.trim()).filter(l => l.length > 0).forEach(link => {
                         let parsedId = autoDetect ? extractPixelIdFromLink(link) : link;
                         if(parsedId && !pixels.some(p => p.id === parsedId)) {
-                            pixels.push({ id: parsedId, source: 'link' });
+                            pixels.push({ id: parsedId, source: 'URL_HOOK' });
                         }
                     });
                 }
@@ -617,42 +673,46 @@
             function updatePixelGridUI() {
                 if (pixels.length === 0) {
                     noPixelsMessage.style.display = 'block';
-                    document.querySelectorAll('.pixel-card-node-real').forEach(el=>el.remove());
+                    document.querySelectorAll('.nexus-real-node').forEach(el=>el.remove());
                     return;
                 }
                 noPixelsMessage.style.display = 'none';
-                
-                // 清理旧节点
-                document.querySelectorAll('.pixel-card-node-real').forEach(el=>el.remove());
+                document.querySelectorAll('.nexus-real-node').forEach(el=>el.remove());
                 
                 pixels.forEach(pixel => {
                     const div = document.createElement('div');
-                    div.className = 'pixel-status-node pixel-card-node-real';
+                    div.className = 'node-nexus nexus-real-node';
                     div.innerHTML = `
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="fw-bold text-truncate" style="max-width:140px;">${pixel.id}</span>
-                            <span class="badge-dot bg-waiting" id="badge-${pixel.id}">
-                                <i class="far fa-clock"></i> ${i18nTokens[currentLang].badge_wait}
-                            </span>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="font-monospace fw-bold text-truncate" style="max-width:160px; color: #fff;">${pixel.id}</span>
+                            <div class="cyber-dot dot-waiting" id="dot-${pixel.id}"></div>
                         </div>
-                        <div class="text-muted" style="font-size:11px;" id="meta-${pixel.id}">Source: ${pixel.source}</div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="tag-nexus" id="meta-${pixel.id}">SRC // ${pixel.source}</span>
+                            <span class="text-muted" style="font-size:10px;" id="submeta-${pixel.id}">AWAIT SIGNAL</span>
+                        </div>
                     `;
                     pixelGrid.appendChild(div);
                 });
             }
             
             function updatePixelCardUI(pixelId, status, txId = '') {
-                const badge = document.getElementById(`badge-${pixelId}`);
-                const meta = document.getElementById(`meta-${pixelId}`);
-                if (!badge) return;
+                const dot = document.getElementById(`dot-${pixelId}`);
+                const submeta = document.getElementById(`submeta-${pixelId}`);
+                if (!dot) return;
                 
                 if (status === 'success') {
-                    badge.className = "badge-dot bg-success-lite";
-                    badge.innerHTML = `<i class="fas fa-check-circle"></i> ${i18nTokens[currentLang].badge_success}`;
-                    if(meta) meta.innerHTML = `Val: 10 BRL | ID: <span class="text-dark font-monospace">${txId}</span>`;
+                    dot.className = "cyber-dot dot-success";
+                    if(submeta) {
+                        submeta.style.color = "var(--glow-success)";
+                        submeta.textContent = txId;
+                    }
                 } else {
-                    badge.className = "badge-dot bg-danger-lite";
-                    badge.innerHTML = `<i class="fas fa-times-circle"></i> ${i18nTokens[currentLang].badge_fail}`;
+                    dot.className = "cyber-dot dot-error";
+                    if(submeta) {
+                        submeta.style.color = "var(--glow-error)";
+                        submeta.textContent = "REJECTED";
+                    }
                 }
             }
             
@@ -662,13 +722,13 @@
                 const isSuccess = status === 'success';
                 
                 row.innerHTML = `
-                    <td class="text-secondary">${timeStr}</td>
-                    <td class="font-monospace fw-bold">${pixelId}</td>
-                    <td><span class="text-xs text-muted">Register, Purchase</span></td>
-                    <td>${isSuccess ? '10 BRL' : 'N/A'}</td>
+                    <td class="text-muted font-monospace" style="font-size:12px;">${timeStr}</td>
+                    <td class="font-monospace fw-bold text-info">${pixelId}</td>
+                    <td><span class="text-secondary small">[REG] ➔ [PURCHASE]</span></td>
+                    <td class="font-monospace" style="color: ${isSuccess ? 'var(--glow-success)' : 'var(--text-secondary)'}">${isSuccess ? '10.00 BRL' : '0.00'}</td>
                     <td>
-                        <span class="badge ${isSuccess?'bg-success':'bg-danger'} bg-opacity-10 ${isSuccess?'text-success':'text-danger'} px-2 py-1 small">
-                            ${isSuccess ? i18nTokens[currentLang].badge_success : i18nTokens[currentLang].badge_fail}
+                        <span style="color: ${isSuccess ? 'var(--glow-success)' : 'var(--glow-error)'}; font-size:12px; font-weight:600;">
+                            ● ${isSuccess ? i18nTokens[currentLang].badge_success : i18nTokens[currentLang].badge_fail}
                         </span>
                     </td>
                 `;
@@ -685,13 +745,14 @@
                 pixels = [];
                 updateProgress(0);
                 statusText.textContent = i18nTokens[currentLang].status_idle;
+                statusLight.className = "cyber-dot dot-waiting";
                 updatePixelGridUI();
                 updateStats();
             }
             
             function addSamplePixels() {
                 pixelIdsInput.value = 'CM3C2F77SJN5G97J9UR0, A1B2C3D4E5F6G7H8I9J0, TK99210484A';
-                activationLinksInput.value = 'https://dummy-landing.com/pay?pixelId=TEST888999';
+                activationLinksInput.value = 'https://attributions.io/click?pixelId=SANDBOX_NEXUS_77';
                 extractPixelsFromInputs();
             }
             
@@ -716,8 +777,8 @@
             function updateStats() {
                 totalPixelsElement.textContent = pixels.length;
                 const activeCount = pixels.filter(p => {
-                    const el = document.getElementById(`badge-${p.id}`);
-                    return el && el.textContent.includes(i18nTokens[currentLang].badge_success);
+                    const el = document.getElementById(`submeta-${p.id}`);
+                    return el && el.style.color === "var(--glow-success)";
                 }).length;
                 
                 activePixelsElement.textContent = activeCount;
