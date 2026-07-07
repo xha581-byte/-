@@ -4,63 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚡ TikTok Multi-Pixel Nexus</title>
-    <!-- 引入高级现代字体 Inter & Fira Code (用于代码/ID显示) -->
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 引入现代化高级无衬线与等宽代码字体方案（使用国内极速CDN确保秒加载） -->
+    <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/jet-brains-mono" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-dark: #090d16;
-            --bg-card: rgba(17, 25, 40, 0.65);
-            --border-glow: rgba(255, 255, 255, 0.06);
+            --bg-dark: #07090e;
+            --bg-card: rgba(13, 19, 33, 0.45);
+            --border-glow: rgba(255, 255, 255, 0.04);
             --border-focus: #00f2fe;
             --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
+            --text-secondary: #64748b;
             
-            /* 霓虹高级发光色 */
             --glow-cyan: #00f2fe;
             --glow-pink: #4facfe;
-            --glow-success: #00f5a0;
-            --glow-error: #ff416c;
+            --glow-success: #05f396;
+            --glow-error: #ff3366;
         }
 
+        /* 全局字体降维打击：强行启用 Apple/SaaS 级别的平滑抗锯齿 */
         body {
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(79, 172, 254, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 5% 10%, rgba(0, 242, 254, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 95% 90%, rgba(79, 172, 254, 0.03) 0%, transparent 50%);
             color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
+            
+            /* 字体族重写：Inter作为数字/英文主导，配合最强中文无衬线兜底 */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            
             min-height: 100vh;
             overflow-x: hidden;
+            letter-spacing: -0.01em; /* 紧凑的高级感字间距 */
         }
 
-        /* 极简网格背景线（高级感核心） */
+        /* 极简科幻背景网格 */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 40px 40px;
             z-index: -1;
             pointer-events: none;
         }
 
-        /* 导航栏毛玻璃效果 */
         .navbar-nexus {
-            background: rgba(9, 13, 22, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(7, 9, 14, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-glow);
-            padding: 1.25rem 2rem;
+            padding: 1.25rem 2.5rem;
         }
 
         .brand-nexus {
-            font-weight: 700;
-            letter-spacing: -0.05em;
-            font-size: 1.4rem;
-            background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink));
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em; /* 工业级大写拉伸间距 */
+            font-size: 1.15rem;
+            background: linear-gradient(90deg, #ffffff, #94a3b8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
@@ -68,35 +76,37 @@
             gap: 0.75rem;
         }
 
-        /* 高级悬浮卡片（毛玻璃 + 边框微光） */
+        /* 卡片 */
         .nexus-card {
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 1.75rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 14px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .nexus-card:hover {
-            border-color: rgba(0, 242, 254, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 242, 254, 0.05);
+            border-color: rgba(0, 242, 254, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 242, 254, 0.03);
+            transform: translateY(-2px);
         }
 
         .card-title-nexus {
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--text-primary);
+            gap: 0.75rem;
+            color: #94a3b8;
         }
 
-        /* 看板指标数字 */
+        /* 核心看板组件：使用极客首选的 JetBrains Mono 字体 */
         .stat-nexus-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -105,150 +115,152 @@
         }
 
         .stat-nexus-card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--border-glow);
             border-radius: 12px;
             padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
         }
 
-        .stat-nexus-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--border-focus), transparent);
-            opacity: 0.3;
+        .stat-nexus-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: #475569;
+            text-transform: uppercase;
         }
 
         .stat-nexus-value {
-            font-size: 2.25rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            letter-spacing: -0.03em;
-            font-family: 'Fira Code', monospace;
+            letter-spacing: -0.04em;
+            font-family: 'JetBrains Mono', monospace; /* 等宽、方正、高级硬朗 */
             margin-top: 0.5rem;
             background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* 磨砂输入框 */
+        /* 磨砂质感控制框 */
         .input-nexus {
-            background: rgba(0, 0, 0, 0.3) !important;
-            border: 1px solid var(--border-glow) !important;
-            color: var(--text-primary) !important;
+            background: rgba(0, 0, 0, 0.4) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            color: #e2e8f0 !important;
             border-radius: 10px !important;
-            padding: 0.85rem 1.2rem !important;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-            transition: all 0.3s !important;
+            padding: 0.9rem 1.2rem !important;
+            font-family: 'JetBrains Mono', monospace; /* 序列号显示的最佳选择 */
+            font-size: 0.85rem;
+            line-height: 1.6;
+            transition: all 0.3s ease !important;
         }
 
         .input-nexus:focus {
-            border-color: var(--border-focus) !important;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15) !important;
-            outline: none;
+            border-color: rgba(0, 242, 254, 0.6) !important;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.1) !important;
         }
 
-        /* 未来感控制按钮 */
+        /* 顶奢极简控制按钮 */
         .btn-nexus-primary {
-            background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink));
-            color: #090d16;
-            font-weight: 600;
+            background: #ffffff;
+            color: #07090e;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             border: none;
-            padding: 0.85rem 2rem;
+            padding: 1rem 2rem;
             border-radius: 10px;
-            letter-spacing: -0.01em;
             transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.2);
         }
 
         .btn-nexus-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.4);
-            opacity: 0.95;
+            background: var(--glow-cyan);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+            transform: translateY(-1px);
         }
 
         .btn-nexus-primary:disabled {
             background: #1e293b;
-            color: var(--text-secondary);
-            box-shadow: none;
+            color: #475569;
             transform: none;
+            box-shadow: none;
         }
 
-        /* 实时状态网格呼吸灯 */
+        /* 实时状态网格控制 */
         .grid-nexus-monitor {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 1.25rem;
-            max-height: 430px;
+            max-height: 440px;
             overflow-y: auto;
             padding-right: 0.5rem;
         }
 
-        /* 自定义美化滚动条 */
-        .grid-nexus-monitor::-webkit-scrollbar { width: 6px; }
-        .grid-nexus-monitor::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .grid-nexus-monitor::-webkit-scrollbar { width: 4px; }
+        .grid-nexus-monitor::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 10px; }
 
         .node-nexus {
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--border-glow);
             border-radius: 12px;
             padding: 1.25rem;
-            position: relative;
-            transition: all 0.3s;
         }
 
         /* 呼吸量子灯 */
         .cyber-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             display: inline-block;
-            position: relative;
         }
-        .dot-waiting { background-color: #64748b; }
+        .dot-waiting { background-color: #334155; }
         .dot-running { 
             background-color: var(--glow-cyan); 
-            box-shadow: 0 0 10px var(--glow-cyan);
-            animation: cyber-pulse 1.5s infinite;
+            box-shadow: 0 0 12px var(--glow-cyan);
+            animation: cyber-pulse 1.2s infinite;
         }
-        .dot-success { background-color: var(--glow-success); box-shadow: 0 0 10px var(--glow-success); }
-        .dot-error { background-color: var(--glow-error); box-shadow: 0 0 10px var(--glow-error); }
+        .dot-success { background-color: var(--glow-success); box-shadow: 0 0 12px var(--glow-success); }
+        .dot-error { background-color: var(--glow-error); box-shadow: 0 0 12px var(--glow-error); }
 
         @keyframes cyber-pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.4); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 1; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.3); }
         }
 
         /* 现代暗色表格 */
         .table-nexus {
             width: 100%;
-            color: var(--text-primary);
         }
         .table-nexus th {
-            background: rgba(255,255,255,0.01);
-            color: var(--text-secondary);
+            background: rgba(255,255,255,0.005);
+            color: #475569;
             padding: 1rem;
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             border-bottom: 1px solid var(--border-glow);
         }
         .table-nexus td {
             padding: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
-            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.01);
+            font-size: 0.85rem;
+            color: #cbd5e1;
         }
 
-        /* 极简高亮小标签 */
         .tag-nexus {
-            font-size: 0.75rem;
-            padding: 0.2rem 0.5rem;
-            background: rgba(255,255,255,0.05);
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0.25rem 0.5rem;
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--border-glow);
-            border-radius: 6px;
-            color: var(--text-secondary);
+            border-radius: 5px;
+            color: #64748b;
+        }
+        
+        .form-check-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -257,11 +269,11 @@
     <!-- 顶部极简导航 -->
     <nav class="navbar-custom navbar-nexus d-flex justify-content-between align-items-center">
         <div class="brand-nexus">
-            <i class="fab fa-tiktok"></i>
-            <span>PIXEL NEXUS // ACTIVATOR</span>
+            <i class="fab fa-tiktok text-white"></i>
+            <span>Nexus Multi-Pixel Core</span>
         </div>
         <div>
-            <select class="form-select form-select-sm input-nexus" id="langSelector" style="width: 110px;">
+            <select class="form-select form-select-sm input-nexus" id="langSelector" style="width: 120px; font-family: inherit;">
                 <option value="zh">ZH / 中文</option>
                 <option value="en">EN / English</option>
             </select>
@@ -270,132 +282,129 @@
 
     <div class="container-fluid px-5 py-4">
         
-        <!-- 大厂同款：核心看板数据网格 -->
+        <!-- 数据大牌看板 -->
         <div class="stat-nexus-grid">
             <div class="stat-nexus-card">
-                <div class="small text-muted" data-i18n="stat_total">TOTAL PIXELS / 像素总控</div>
+                <div class="stat-nexus-label" data-i18n="stat_total">TOTAL INSTANCES // 解析总数</div>
                 <div class="stat-nexus-value" id="totalPixels">0</div>
             </div>
             <div class="stat-nexus-card">
-                <div class="small text-muted" data-i18n="stat_active">ACTIVE PIXELS / 已成功激活</div>
-                <div class="stat-nexus-value" id="activePixels" style="background: linear-gradient(180deg, #00f5a0, #00d9f5); -webkit-background-clip: text;">0</div>
+                <div class="stat-nexus-label" data-i18n="stat_active">SUCCESS INJECT // 激活成功</div>
+                <div class="stat-nexus-value" id="activePixels" style="background: linear-gradient(180deg, #05f396 0%, #00bfa5 100%); -webkit-background-clip: text;">0</div>
             </div>
             <div class="stat-nexus-card">
-                <div class="small text-muted" data-i18n="stat_events">TRAFFIC EVENTS / 已发重放事件</div>
+                <div class="stat-nexus-label" data-i18n="stat_events">TRAFFIC RELAYS // 重放事件</div>
                 <div class="stat-nexus-value" id="totalEvents">0</div>
             </div>
             <div class="stat-nexus-card">
-                <div class="small text-muted" data-i18n="stat_rate">SUCCESS RATE / 全链路成功率</div>
-                <div class="stat-nexus-value" id="successRate" style="background: linear-gradient(180deg, #4facfe, #00f2fe); -webkit-background-clip: text;">100%</div>
+                <div class="stat-nexus-label" data-i18n="stat_rate">PIPELINE INTEGRITY // 成功率</div>
+                <div class="stat-nexus-value" id="successRate" style="background: linear-gradient(180deg, #ffffff 0%, #64748b 100%); -webkit-background-clip: text;">100%</div>
             </div>
         </div>
 
         <div class="row g-4">
-            <!-- 左侧核心操作卡片 -->
+            <!-- 左侧：控制面板 -->
             <div class="col-xl-6">
                 <div class="nexus-card">
                     <div class="card-title-nexus">
-                        <i class="fas fa-terminal" style="color: var(--glow-cyan)"></i>
-                        <span data-i18n="card_config">INJECTOR CONFIGURATION / 注入源配置</span>
+                        <i class="fas fa-sliders-h" style="color: var(--glow-cyan)"></i>
+                        <span data-i18n="card_config">Control Console / 控制配置台</span>
                     </div>
                     
                     <div class="mb-4">
-                        <label class="form-label text-muted small fw-bold" data-i18n="label_pixel_ids">PIXEL INSTANCE IDS</label>
-                        <textarea class="form-control input-nexus" id="pixelIds" rows="3" placeholder="Paste IDs separated by commas..."></textarea>
+                        <label class="form-label text-uppercase font-monospace small mb-2" style="color: #475569; font-weight:700;" data-i18n="label_pixel_ids">Pixel Target IDs</label>
+                        <textarea class="form-control input-nexus" id="pixelIds" rows="3" placeholder="CM3C2F77SJN5G97J9UR0, A1B2C3D4E5F6G7H8I9J0..."></textarea>
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label text-muted small fw-bold" data-i18n="label_links">WEBHOOK / LANDING ACTIVATION LINKS</label>
-                        <textarea class="form-control input-nexus" id="activationLinks" rows="3" placeholder="Paste links, one per line..."></textarea>
+                        <label class="form-label text-uppercase font-monospace small mb-2" style="color: #475569; font-weight:700;" data-i18n="label_links">Attribution Gateway Links</label>
+                        <textarea class="form-control input-nexus" id="activationLinks" rows="3" placeholder="https://domain.com/landing?pixelId=CM3C2F77SJN5G97J9UR0..."></textarea>
                     </div>
 
                     <div class="row g-3 mb-4">
                         <div class="col-sm-6">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="autoDetect" checked>
-                                <label class="form-check-label text-muted small" for="autoDetect" data-i18n="opt_autodetect">URL Parameter Auto-Extraction</label>
+                                <label class="form-check-label" for="autoDetect" data-i18n="opt_autodetect">URL Regex Extraction</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="parallelProcessing" checked>
-                                <label class="form-check-label text-muted small" for="parallelProcessing" data-i18n="opt_parallel">High-Concurrency Async Mode</label>
+                                <label class="form-check-label" for="parallelProcessing" data-i18n="opt_parallel">High-Concurrency Async Mode</label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 极细科技感进度条 -->
-                    <div class="progress mb-3" style="height: 3px; background: rgba(255,255,255,0.05);">
-                        <div id="progressBar" class="progress-bar" style="width: 0%; background: linear-gradient(90deg, var(--glow-cyan), var(--glow-pink)); transition: width 0.4s ease;"></div>
+                    <!-- 进度线 -->
+                    <div class="progress mb-3" style="height: 2px; background: rgba(255,255,255,0.02);">
+                        <div id="progressBar" class="progress-bar" style="width: 0%; background: #ffffff; transition: width 0.3s ease;"></div>
                     </div>
 
-                    <div id="activationStatus" class="p-3 mb-4 rounded-3 d-flex align-items-center gap-3" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03);">
-                        <div class="cyber-dot dot-running" id="statusLight"></div>
-                        <span id="statusText" class="small text-muted" data-i18n="status_idle">System core stands ready. Awaiting payload...</span>
+                    <div id="activationStatus" class="p-3 mb-4 rounded-3 d-flex align-items-center gap-3" style="background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.01);">
+                        <div class="cyber-dot dot-waiting" id="statusLight"></div>
+                        <span id="statusText" class="small" style="color: #64748b;" data-i18n="status_idle">Awaiting pipeline compilation...</span>
                     </div>
 
                     <div class="d-flex gap-3">
                         <button id="activateButton" class="btn-nexus-primary flex-grow-1">
-                            <i class="fas fa-satellite-dish me-2"></i><span data-i18n="btn_run">FIRE INJECTION</span>
+                            <span data-i18n="btn_run">EXECUTE CONCURRENT INJECTION</span>
                         </button>
-                        <button id="resetButton" class="btn btn-dark px-4" style="border-radius: 10px; border: 1px solid var(--border-glow);">
-                            <i class="fas fa-power-off text-muted"></i>
+                        <button id="resetButton" class="btn btn-dark px-4" style="border-radius: 10px; border: 1px solid rgba(255,255,255,0.03); background: transparent;">
+                            <i class="fas fa-rotate text-muted" style="font-size: 0.85rem;"></i>
                         </button>
                     </div>
 
-                    <!-- 底部高级隐藏导入 -->
-                    <div class="mt-4 pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
+                    <!-- 底部流解析 -->
+                    <div class="mt-4 pt-4 border-top" style="border-color: rgba(255,255,255,0.03) !important;">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="small text-muted fw-bold" data-i18n="batch_upload_title">RAW STREAMING IMPORT (.TXT/.CSV)</span>
-                            <button class="btn btn-link btn-sm p-0 text-decoration-none text-info small" id="quickTest" data-i18n="btn_demo">// Load Sandbox Dataset</button>
+                            <span class="small font-monospace text-uppercase" style="color: #475569; font-weight:700;" data-i18n="batch_upload_title">Stream Import (.txt/.csv)</span>
+                            <button class="btn btn-link btn-sm p-0 text-decoration-none font-monospace small text-white-50" id="quickTest" data-i18n="btn_demo">// Sandbox Mock</button>
                         </div>
-                        <div class="input-group">
-                            <input type="file" class="form-control input-nexus text-muted form-control-sm" id="batchFile">
-                            <button class="btn btn-secondary btn-sm px-3 small" style="border-radius:0 10px 10px 0" type="button" id="uploadBtn" data-i18n="btn_upload">PARSED</button>
+                        <div class="input-group input-group-sm">
+                            <input type="file" class="form-control input-nexus" id="batchFile">
+                            <button class="btn btn-outline-secondary px-3 font-monospace text-uppercase" style="border-radius:0 10px 10px 0; font-size:0.75rem; border:1px solid rgba(255,255,255,0.05);" type="button" id="uploadBtn" data-i18n="btn_upload">Compile</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 右侧矩阵监控盘 -->
+            <!-- 右侧：状态监视矩阵 -->
             <div class="col-xl-6">
                 <div class="nexus-card h-100">
                     <div class="card-title-nexus">
-                        <i class="fas fa-wave-square" style="color: var(--glow-pink)"></i>
-                        <span data-i18n="card_monitor">REAL-TIME INSTANCE MATRIX / 实例监控矩阵</span>
+                        <i class="fas fa-network-wired" style="color: var(--glow-pink)"></i>
+                        <span data-i18n="card_monitor">Telemetry Live Grid / 遥测网格监视器</span>
                     </div>
                     
                     <div id="pixelGrid" class="grid-nexus-monitor">
-                        <!-- 空白占位符 -->
                         <div class="w-100 text-center py-5 my-5" id="noPixelsMessage">
-                            <i class="fas fa-project-diagram fa-2x mb-3" style="color: rgba(255,255,255,0.05)"></i>
-                            <p class="text-muted small" data-i18n="msg_empty">No live streaming telemetry detected. Awaiting tactical execution.</p>
+                            <i class="fas fa-cube fa-2x mb-3" style="color: rgba(255,255,255,0.02)"></i>
+                            <p class="small" style="color:#475569;" data-i18n="msg_empty">Matrix empty. Pipeline output will be channeled here.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 底部审计日志面板 -->
+            <!-- 底部：追溯审计日志 -->
             <div class="col-12 mt-2">
                 <div class="nexus-card">
                     <div class="card-title-nexus">
-                        <i class="fas fa-history text-muted"></i>
-                        <span data-i18n="card_history">全链路追溯审计日志 / TOTAL AUDIT TRAIL</span>
+                        <i class="fas fa-shield-alt text-muted"></i>
+                        <span data-i18n="card_history">Pipeline Ledger / 全链路追溯审计日志</span>
                     </div>
                     <div class="table-responsive" style="max-height: 250px;">
                         <table class="table-nexus">
                             <thead>
                                 <tr>
-                                    <th data-i18n="th_time">TIMESTAMP</th>
-                                    <th data-i18n="th_id">PIXEL INSTANCE ID</th>
-                                    <th data-i18n="th_event">EVENT ROUTE</th>
-                                    <th data-i18n="th_val">PAYLOAD VALUE</th>
-                                    <th data-i18n="th_status">TELEMETRY STATE</th>
+                                    <th data-i18n="th_time">Timestamp</th>
+                                    <th data-i18n="th_id">Pixel Node ID</th>
+                                    <th data-i18n="th_event">Event Pipeline</th>
+                                    <th data-i18n="th_val">Assigned Value</th>
+                                    <th data-i18n="th_status">Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="historyTable">
-                                <!-- 跑数动态追加点 -->
-                            </tbody>
+                            <tbody id="historyTable"></tbody>
                         </table>
                     </div>
                 </div>
@@ -404,68 +413,67 @@
         </div>
     </div>
 
-    <!-- 驱动内核逻辑 -->
     <script>
         const i18nTokens = {
             zh: {
-                stat_total: "PIXEL PARSED // 载入实例总数",
-                stat_active: "INJECTED SUCCESS // 成功激活实例",
-                stat_events: "TELEMETRY TRAFFIC // 下发重放事件",
-                stat_rate: "STABILITY RATE // 核心全链率",
-                card_config: "INJECTOR CORE CONFIG // 核心注入源配置",
-                card_monitor: "REAL-TIME METRIC MATRIX // 矩阵实时监视器",
-                card_history: "CRYPTO AUDIT TRAIL LOGS // 全链路追溯审计日志",
-                label_pixel_ids: "PIXEL INSTANCE IDS (以逗号 `,` 分隔或换行拼装)",
-                label_links: "LANDING ATTRIBUTION ROUTERS (重定向链路，一行一个)",
-                opt_autodetect: "允许核心算法自清洗 URL 包含的特定 ID 字符串",
-                opt_parallel: "启用异步多线程并发框架方案 (加速重放过程)",
-                status_idle: "量子引擎内核已就绪。等待注入目标负载...",
-                status_err_empty: "未捕获到任何格式合规的序列，请求已被核心终止保护。",
-                status_start: "正在向当前调度环境推送共计 {n} 组像素包...",
-                status_complete: "批次序列下发完成。全链注入流同步成功。",
-                btn_run: "分发执行全链重放激活",
-                btn_demo: "调取内部标准沙盒数据集",
-                btn_upload: "全自动清洗导入",
-                batch_upload_title: "本地结构化原始数据流格式重构 (.TXT / .CSV)",
-                msg_empty: "主矩阵中未检测到存活的心跳监控节点。请配置源数据后执行下发。",
-                th_time: "记录纪元",
-                th_id: "目标像素单元 ID",
-                th_event: "触发表单链路",
-                th_val: "负载资产重放价值",
-                th_status: "遥测判定响应",
-                badge_wait: "待下发",
-                badge_success: "注入成功",
-                badge_fail: "抛出致命异常"
+                stat_total: "COMPUTED NODES // 解析总数",
+                stat_active: "INJECTED SUCCESS // 成功激活",
+                stat_events: "TOTAL RELAYS // 下发事件",
+                stat_rate: "PIPELINE STABILITY // 核心全链率",
+                card_config: "INJECTOR SETTINGS // 配置工作台",
+                card_monitor: "LIVE STREAM METRICS // 遥测矩阵监控",
+                card_history: "TRANSACTION LEDGER // 全链路追溯日志",
+                label_pixel_ids: "Pixel IDs 序列单元 (半角逗号分隔)",
+                label_links: "落地页或网关追踪 Link (一行一个序列)",
+                opt_autodetect: "允许内核算法智能提取过滤 URL 参数中的 ID",
+                opt_parallel: "激活高并发多线程异步管线 (急速同步模式)",
+                status_idle: "引擎已准备就绪。等待配置目标分发链路...",
+                status_err_empty: "未捕获到任何有效荷载，进程已由核心安全终止。",
+                status_start: "正在编译分发链路... 部署 {n} 个节点资产。",
+                status_complete: "批次序列下发完成。链路流回执状态良好。",
+                btn_run: "同步分发执行全链重放激活",
+                btn_demo: "载入标准沙盒数据集",
+                btn_upload: "全解析加载",
+                batch_upload_title: "本地结构化加密流数据清洗导入 (.TXT / .CSV)",
+                msg_empty: "主矩阵中未检测到存活的数据流监控节点。请配置源数据。",
+                th_time: "纪元时基",
+                th_id: "节点像素 ID",
+                th_event: "执行管线",
+                th_val: "重放价值负载",
+                th_status: "遥测响应状态",
+                badge_wait: "就绪",
+                badge_success: "成功注入",
+                badge_fail: "抛出致命Rejection"
             },
             en: {
-                stat_total: "PIXEL PARSED // INSTANCES TOTAL",
+                stat_total: "COMPUTED NODES // TOTAL INSTANCES",
                 stat_active: "INJECTED SUCCESS // ACTIVE INSTANCES",
-                stat_events: "TELEMETRY TRAFFIC // EVENTS RECORDED",
-                stat_rate: "STABILITY RATE // PIPELINE INTEGRITY",
-                card_config: "INJECTOR CORE CONFIGURATION",
-                card_monitor: "REAL-TIME METRIC MATRIX MONITOR",
-                card_history: "DECENTRALIZED AUDIT TRAIL SNAPSHOTS",
-                label_pixel_ids: "PIXEL INSTANCE IDS (COMMA SEPARATED MATRIX)",
-                label_links: "LANDING ATTRIBUTION ROUTERS (ONE URL PER LINE)",
-                opt_autodetect: "Allow algorithmic parameter extraction from url query strings",
-                opt_parallel: "Deploy multi-threaded concurrent processing cluster",
-                status_idle: "Nexus core online. Standing by for strategic telemetry payload...",
-                status_err_empty: "No valid byte sequence mapped. Process rejected by kernel.",
-                status_start: "Pushing {n} tracking blocks down to deployment layer...",
-                status_complete: "All scheduled telemetry vectors dispatched successfully.",
+                stat_events: "TOTAL RELAYS // DISPATCHED EVENTS",
+                stat_rate: "PIPELINE STABILITY // CLUSTER RATIO",
+                card_config: "INJECTOR SYSTEM SETTINGS",
+                card_monitor: "LIVE TELEMETRY STREAM MATRIX",
+                card_history: "SECURE CRYPTO TRANSACTION LEDGER",
+                label_pixel_ids: "Pixel ID Sequences (Comma Delimited)",
+                label_links: "Attribution Gateway Links (One URL Per Line)",
+                opt_autodetect: "Enable automated query parameter filtering",
+                opt_parallel: "Deploy hyper-concurrent async pipeline threads",
+                status_idle: "Core initialized. Standing by for payload targets...",
+                status_err_empty: "Empty pipeline stack detected. Process structural rejection.",
+                status_start: "Compiling telemetry vectors... Pushing {n} target units.",
+                status_complete: "All synchronized telemetry streams dispatched fully.",
                 btn_run: "DISPATCH SIGNAL STREAM",
-                btn_demo: "Load Internal Sandbox Mockups",
-                btn_upload: "PARSE RECORDS",
-                batch_upload_title: "STREAM IMPORT LOCAL ENCRYPTED LOGS (.TXT / .CSV)",
-                msg_empty: "No active node telemetry streaming in matrix dashboard viewport.",
-                th_time: "EPOCH SECONDS",
-                th_id: "TRACKING NODE ID",
-                th_event: "TRAJECTORY STACK",
+                btn_demo: "Inject Sandbox Dataset",
+                btn_upload: "COMPILE STREAM",
+                batch_upload_title: "STREAM IMPORT LOCAL LOG RECONSTRUCTION (.TXT / .CSV)",
+                msg_empty: "No active telemetry streaming in live viewport node matrix.",
+                th_time: "EPOCH TIMESTAMP",
+                th_id: "PIXEL NODE ID",
+                th_event: "TRAJECTORY LINE",
                 th_val: "PAYLOAD WEIGHT",
                 th_status: "TELEMETRY RESPONSE",
                 badge_wait: "QUEUED",
                 badge_success: "INJECTED",
-                badge_fail: "CRITICAL REJECTION"
+                badge_fail: "REJECTED"
             }
         };
 
@@ -522,7 +530,7 @@
                 }
                 
                 activateButton.disabled = true;
-                activateButton.innerHTML = `<i class="fas fa-circle-notch fa-spin me-2"></i>BROADCASTING...`;
+                activateButton.innerHTML = `DISPATCHING STREAM...`;
                 statusLight.className = "cyber-dot dot-running";
                 
                 statusText.textContent = i18nTokens[currentLang].status_start.replace("{n}", pixels.length);
@@ -588,7 +596,7 @@
                 statusText.textContent = i18nTokens[currentLang].status_complete;
                 statusLight.className = "cyber-dot dot-success";
                 activateButton.disabled = false;
-                activateButton.innerHTML = `<i class="fas fa-satellite-dish me-2"></i><span>${i18nTokens[currentLang].btn_run}</span>`;
+                activateButton.innerHTML = `<span>${i18nTokens[currentLang].btn_run}</span>`;
                 updateStats();
             }
 
@@ -643,7 +651,7 @@
                 const rawIds = pixelIdsInput.value.trim();
                 if (rawIds) {
                     rawIds.split(',').map(id => id.trim()).filter(id => id.length >= 5).forEach(id => {
-                        if(!pixels.some(p => p.id === id)) pixels.push({ id, source: 'DIRECT_ID' });
+                        if(!pixels.some(p => p.id === id)) pixels.push({ id, source: 'RAW_POOL' });
                     });
                 }
                 
@@ -653,7 +661,7 @@
                     rawLinks.split('\n').map(l => l.trim()).filter(l => l.length > 0).forEach(link => {
                         let parsedId = autoDetect ? extractPixelIdFromLink(link) : link;
                         if(parsedId && !pixels.some(p => p.id === parsedId)) {
-                            pixels.push({ id: parsedId, source: 'URL_HOOK' });
+                            pixels.push({ id: parsedId, source: 'ROUTER_GATEWAY' });
                         }
                     });
                 }
@@ -684,12 +692,12 @@
                     div.className = 'node-nexus nexus-real-node';
                     div.innerHTML = `
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="font-monospace fw-bold text-truncate" style="max-width:160px; color: #fff;">${pixel.id}</span>
+                            <span class="font-monospace fw-bold text-truncate" style="max-width:160px; color: #fff; font-size: 0.85rem;">${pixel.id}</span>
                             <div class="cyber-dot dot-waiting" id="dot-${pixel.id}"></div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="tag-nexus" id="meta-${pixel.id}">SRC // ${pixel.source}</span>
-                            <span class="text-muted" style="font-size:10px;" id="submeta-${pixel.id}">AWAIT SIGNAL</span>
+                            <span class="tag-nexus" id="meta-${pixel.id}">${pixel.source}</span>
+                            <span style="font-size:10px; font-weight:700; color:#334155; font-family:'JetBrains Mono'" id="submeta-${pixel.id}">STANDBY</span>
                         </div>
                     `;
                     pixelGrid.appendChild(div);
@@ -711,7 +719,7 @@
                     dot.className = "cyber-dot dot-error";
                     if(submeta) {
                         submeta.style.color = "var(--glow-error)";
-                        submeta.textContent = "REJECTED";
+                        submeta.textContent = "FAILED";
                     }
                 }
             }
@@ -722,12 +730,12 @@
                 const isSuccess = status === 'success';
                 
                 row.innerHTML = `
-                    <td class="text-muted font-monospace" style="font-size:12px;">${timeStr}</td>
-                    <td class="font-monospace fw-bold text-info">${pixelId}</td>
-                    <td><span class="text-secondary small">[REG] ➔ [PURCHASE]</span></td>
-                    <td class="font-monospace" style="color: ${isSuccess ? 'var(--glow-success)' : 'var(--text-secondary)'}">${isSuccess ? '10.00 BRL' : '0.00'}</td>
+                    <td class="font-monospace" style="font-size:11px; color:#475569;">${timeStr}</td>
+                    <td class="font-monospace fw-bold text-white-50">${pixelId}</td>
+                    <td class="font-monospace" style="font-size:11px; color:#475569;">REG ➔ PURCHASE</td>
+                    <td class="font-monospace" style="color: ${isSuccess ? 'var(--glow-success)' : '#475569'}; font-size: 12px;">${isSuccess ? '10.00 BRL' : '0.00'}</td>
                     <td>
-                        <span style="color: ${isSuccess ? 'var(--glow-success)' : 'var(--glow-error)'}; font-size:12px; font-weight:600;">
+                        <span style="color: ${isSuccess ? 'var(--glow-success)' : 'var(--glow-error)'}; font-size:11px; font-weight:700; font-family:'JetBrains Mono'">
                             ● ${isSuccess ? i18nTokens[currentLang].badge_success : i18nTokens[currentLang].badge_fail}
                         </span>
                     </td>
@@ -752,7 +760,7 @@
             
             function addSamplePixels() {
                 pixelIdsInput.value = 'CM3C2F77SJN5G97J9UR0, A1B2C3D4E5F6G7H8I9J0, TK99210484A';
-                activationLinksInput.value = 'https://attributions.io/click?pixelId=SANDBOX_NEXUS_77';
+                activationLinksInput.value = 'https://nexus-gateway.com/track?id=SANDBOX_NODE_88';
                 extractPixelsFromInputs();
             }
             
